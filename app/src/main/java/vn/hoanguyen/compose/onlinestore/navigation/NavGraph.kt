@@ -73,7 +73,18 @@ private fun NavGraphBuilder.addRegisterScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.Register.path) {
-        RegisterScreen()
+        RegisterScreen(
+            navigateToLogin = {
+                navController.navigate(NavRoute.Login.path) {
+                    clear(NavRoute.Register.path)
+                }
+            },
+            navigateToHome = {
+                navController.navigate(NavRoute.Home.path) {
+                    clear(NavRoute.Register.path)
+                }
+            },
+        )
     }
 }
 

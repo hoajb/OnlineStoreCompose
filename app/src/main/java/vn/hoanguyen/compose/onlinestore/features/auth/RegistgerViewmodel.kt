@@ -10,31 +10,37 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class LoginViewmodel @Inject constructor(
+class RegisterViewmodel @Inject constructor(
     private val authService: AuthService
 ) : ViewModel() {
+    val fullNameText = mutableStateOf("")
     val emailText = mutableStateOf("")
     val passText = mutableStateOf("")
+    val rePassText = mutableStateOf("")
     val loading = mutableStateOf(false)
     val error = mutableStateOf("")
 
-    fun login(navigateToHome: () -> Unit) {
-        if (emailText.value.isEmpty() || passText.value.isEmpty()) {
-            error.value = "Email or Pass is invalid"
+    fun register(navigateToHome: () -> Unit) {
+        if (fullNameText.value.isEmpty() || emailText.value.isEmpty() || passText.value.isEmpty() || rePassText.value.isEmpty()) {
+            error.value = "Please input all fields"
             return
         }
+
+        if (passText.value != rePassText.value) {
+            error.value = "Password is not matched."
+            return
+        }
+
         loading.value = true
         viewModelScope.launch {
-            authService.signInWithEmailAndPassword(emailText.value, passText.value).fold(
-                onSuccess = {
+            authService.signUpWithEmailAndPassword(emailText.value, passText.value)
+                .fold(onSuccess = {
                     loading.value = false
                     navigateToHome.invoke()
-                },
-                onFailure = { e ->
+                }, onFailure = { e ->
                     loading.value = false
                     error.value = "[${e.message}]"
-                }
-            )
+                })
         }
     }
 

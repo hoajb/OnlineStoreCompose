@@ -21,6 +21,18 @@ class AuthService @Inject constructor() {
         }
     }
 
+    suspend fun signUpWithEmailAndPassword(email: String, password: String): Result<Unit> {
+        return try {
+            withContext(Dispatchers.IO) {
+                delay(2_000L)
+                Result.success(Unit)
+            }
+
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     suspend fun logOut(): Result<Unit> {
         return try {
             withContext(Dispatchers.IO) {

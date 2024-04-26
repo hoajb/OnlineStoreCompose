@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 
 private val ErrorColor = Color.Red
 
@@ -33,7 +34,7 @@ fun AppTextField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     readOnly: Boolean = false,
-    textStyle: TextStyle = LocalTextStyle.current,
+    textStyle: TextStyle = AppTypography.bodyMedium,
     label: String,
     placeholder: String,
     leadingIcon: @Composable (() -> Unit)? = null,
@@ -52,7 +53,10 @@ fun AppTextField(
 ) {
 
     Column {
-        Text(label, modifier = Modifier.padding(bottom = 8.dp))
+        Text(
+            label, modifier = Modifier.padding(bottom = 8.dp),
+            style = AppTypography.bodyMedium
+        )
 
         OutlinedTextField(
             colors = TextFieldDefaults.colors(
@@ -86,8 +90,9 @@ fun AppTextField(
                 if (supportingText.isNotEmpty()) {
                     Text(
                         text = supportingText,
-                        color = ErrorColor,
-                        fontWeight = FontWeight.Bold
+                        style = AppTypography.bodySmall.copy(
+                            color = ErrorColor,
+                        ),
                     )
                 }
             },
