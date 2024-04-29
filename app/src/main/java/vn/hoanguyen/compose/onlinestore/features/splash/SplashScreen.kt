@@ -23,12 +23,12 @@ import vn.hoanguyen.compose.onlinestore.ui.theme.OnlineStoreComposeTheme
 @Composable
 fun SplashScreen(
     authViewmodel: AuthViewmodel = hiltViewModel(),
-    onNavigateLogin: () -> Unit,
+    onNavigateWelcome: () -> Unit,
     onNavigateHome: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         authViewmodel.onNavigateHandle(
-            onNavigateLogin,
+            onNavigateWelcome,
             onNavigateHome
         )
     }

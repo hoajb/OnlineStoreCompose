@@ -2,6 +2,7 @@ package vn.hoanguyen.compose.onlinestore.navigation
 
 private object Path {
     const val SPLASH = "splash"
+    const val WELCOME = "welcome"
     const val LOGIN = "login"
     const val REGISTER = "register"
     const val FORGOT_PASSWORD = "forgot_password"
@@ -13,6 +14,7 @@ private object Path {
 
 sealed class NavRoute(val path: String) {
     data object Splash : NavRoute(Path.SPLASH)
+    data object Welcome : NavRoute(Path.WELCOME)
     data object Login : NavRoute(Path.LOGIN)
     data object Register : NavRoute(Path.REGISTER)
     data object ForgotPassword : NavRoute(Path.FORGOT_PASSWORD)

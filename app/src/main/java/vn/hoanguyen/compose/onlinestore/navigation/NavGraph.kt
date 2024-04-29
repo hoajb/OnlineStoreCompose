@@ -11,6 +11,7 @@ import vn.hoanguyen.compose.onlinestore.features.auth.LoginScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.OTPScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.RegisterScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.ResetPasswordScreen
+import vn.hoanguyen.compose.onlinestore.features.auth.WelcomeScreen
 import vn.hoanguyen.compose.onlinestore.features.home.HomeScreen
 import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 
@@ -18,9 +19,10 @@ import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 @Composable
 fun NavGraph(navController: NavHostController) {
     NavHost(
-        navController = navController, startDestination = NavRoute.Splash.path
+        navController = navController, startDestination = NavRoute.Home.path
     ) {
         addSplashScreen(navController)
+        addWelcomeScreen(navController)
         addLoginScreen(navController)
         addRegisterScreen(navController)
         addForgotPasswordScreen(navController)
@@ -39,10 +41,20 @@ private fun NavGraphBuilder.addSplashScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.Splash.path) {
-        SplashScreen(onNavigateLogin = {
-            navController.navigate(NavRoute.Login.path) { clear(NavRoute.Splash.path) }
+        SplashScreen(onNavigateWelcome = {
+            navController.navigate(NavRoute.Welcome.path) { clear(NavRoute.Splash.path) }
         }, onNavigateHome = {
             navController.navigate(NavRoute.Home.path) { clear(NavRoute.Splash.path) }
+        })
+    }
+}
+
+private fun NavGraphBuilder.addWelcomeScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.Welcome.path) {
+        WelcomeScreen(onNavigateLogin = {
+            navController.navigate(NavRoute.Login.path) { clear(NavRoute.Welcome.path) }
         })
     }
 }

@@ -35,7 +35,7 @@ fun AppTextField(
     enabled: Boolean = true,
     readOnly: Boolean = false,
     textStyle: TextStyle = AppTypography.bodyMedium,
-    label: String,
+    label: String = "",
     placeholder: String,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,

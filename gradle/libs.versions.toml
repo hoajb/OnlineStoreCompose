@@ -9,11 +9,12 @@ lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.8.2"
 composeBom = "2023.08.00"
 
-dagger = "2.51.1"
+hilt = "2.51.1"
 androidxHiltNavigationCompose = "1.1.0"
 navigation-compose-version = "2.7.7"
-hilt = "2.48.1"
 hiltExt = "1.1.0"
+gsonVersion = "2.10.1"
+coil = "2.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,10 +32,14 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+# Network
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
 
 # DI
-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
+dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose-version" }
 
@@ -42,6 +47,5 @@ androidx-compose-navigation = { group = "androidx.navigation", name = "navigatio
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinKapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-daggerHiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+daggerHiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
