@@ -26,9 +26,9 @@ class HomeViewmodel @Inject constructor(
         }
     }
 
-    fun loadProductList() {
+    fun loadProductList(listCategory: List<String> = emptyList()) {
         viewModelScope.launch {
-            _listProduct.emit(productService.getProductList())
+            _listProduct.emit(productService.getProductList(listCategory = listCategory))
         }
     }
 

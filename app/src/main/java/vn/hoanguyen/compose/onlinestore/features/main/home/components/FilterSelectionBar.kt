@@ -28,14 +28,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilterSelectionBarViewModel @Inject constructor() : ViewModel() {
-    private val _selectedIndex = mutableStateListOf<Int>()
-    val selectedIndex: List<Int> = _selectedIndex
+    private val _selectedIndexList = mutableStateListOf<Int>()
+    val selectedIndexList: List<Int> = _selectedIndexList
 
     fun select(index: Int) {
-        if (_selectedIndex.contains(index)) {
-            _selectedIndex.remove(index)
+        if (index == 0) {//All
+            _selectedIndexList.clear()
+            _selectedIndexList.add(0)
+            return
+        }
+        _selectedIndexList.remove(0)
+        if (_selectedIndexList.contains(index)) {
+            _selectedIndexList.remove(index)
         } else {
-            _selectedIndex.add(index)
+            _selectedIndexList.add(index)
         }
     }
 }
@@ -51,7 +57,7 @@ fun FilterSelectionBar(
     listItem: List<FilterItem> = emptyList(),
     onSelectedChange: (List<Int>) -> Unit
 ) {
-    val selectedIndex = viewmodel.selectedIndex
+    val selectedIndexList = viewmodel.selectedIndexList
 
     Box(
         Modifier
@@ -69,7 +75,7 @@ fun FilterSelectionBar(
                     text = listItem[index].text,
                     textAlign = TextAlign.Center,
                     style = AppTypography.bodyMedium,
-                    color = if (selectedIndex.contains(index)) Color.White else Color.Black,
+                    color = if (selectedIndexList.contains(index)) Color.White else Color.Black,
                     modifier = Modifier
                         .fillMaxWidth()
                         .defaultMinSize(minWidth = 100.dp)
@@ -79,18 +85,19 @@ fun FilterSelectionBar(
                             shape = RoundedCornerShape(12.dp)
                         )
                         .background(
-                            color = if (selectedIndex.contains(index)) Color.Black
+                            color = if (selectedIndexList.contains(index)) Color.Black
                             else Color.Transparent,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .clip(shape = RoundedCornerShape(12.dp))
                         .selectable(
-                            selected = selectedIndex.contains(index),
+                            selected = selectedIndexList.contains(index),
                             onClick = {
                                 viewmodel.select(index)
-                                onSelectedChange.invoke(selectedIndex)
+                                onSelectedChange.invoke(selectedIndexList)
                             }
-                        ).padding(6.dp)
+                        )
+                        .padding(6.dp)
                 )
             }
         }

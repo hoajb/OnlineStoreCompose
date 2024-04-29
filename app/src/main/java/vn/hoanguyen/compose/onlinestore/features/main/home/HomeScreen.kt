@@ -37,6 +37,9 @@ fun HomeScreen(
     HomeBody(
         listFilter = listFilter.value,
         listProduct = listProduct.value,
+        onSelectedFilterCategoryChange = { listCategory ->
+            viewmodel.loadProductList(listCategory)
+        }
     )
 }
 
@@ -44,6 +47,7 @@ fun HomeScreen(
 private fun HomeBody(
     listFilter: List<String>,
     listProduct: List<Product>,
+    onSelectedFilterCategoryChange: (List<String>) -> Unit
 ) {
     Surface(
         color = Color.White
@@ -64,8 +68,13 @@ private fun HomeBody(
                 listItem = listFilter.mapIndexed { index, item ->
                     FilterItem(id = index, text = item)
                 },
-                onSelectedChange = {
-                    //TODO
+                onSelectedChange = { indexList ->
+                    if (indexList.contains(0)) { // All
+                        onSelectedFilterCategoryChange.invoke(emptyList())
+                    } else {
+                        onSelectedFilterCategoryChange.invoke(
+                            indexList.map { index -> listFilter[index] })
+                    }
                 })
 
             HomeListProduct(
@@ -95,7 +104,8 @@ private fun HomeScreenPrev() {
                 imageUrl = "https://static.pullandbear.net/2/photos//2024/V/0/2/p/3241/570/711/3241570711_2_1_8.jpg?t=1713773719598&imwidth=1125",
                 category = "TShirt"
             )
-        }
+        },
+        onSelectedFilterCategoryChange = {}
 
     )
 }
