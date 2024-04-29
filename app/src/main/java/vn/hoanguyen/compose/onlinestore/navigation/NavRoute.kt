@@ -8,8 +8,13 @@ private object Path {
     const val FORGOT_PASSWORD = "forgot_password"
     const val RESET_PASSWORD = "Reset_password"
     const val OTP = "otp"
-    const val HOME = "home"
+    const val MAIN = "main"
     const val PROFILE = "profile"
+    const val HOME = "home"
+    const val SEARCH = "search"
+    const val SAVED = "saved"
+    const val CART = "cart"
+    const val ACCOUNT = "account"
 }
 
 sealed class NavRoute(val path: String) {
@@ -20,7 +25,12 @@ sealed class NavRoute(val path: String) {
     data object ForgotPassword : NavRoute(Path.FORGOT_PASSWORD)
     data object ResetPassword : NavRoute(Path.RESET_PASSWORD)
     data object OTP : NavRoute(Path.OTP)
+    data object Main : NavRoute(Path.MAIN)
     data object Home : NavRoute(Path.HOME)
+    data object Saved : NavRoute(Path.SAVED)
+    data object Search : NavRoute(Path.SEARCH)
+    data object Cart : NavRoute(Path.CART)
+    data object Account : NavRoute(Path.ACCOUNT)
 
     data object Profile : NavRoute(Path.PROFILE) {
         val id = "id"

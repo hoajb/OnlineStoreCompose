@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package vn.hoanguyen.compose.onlinestore.features.home.components
+package vn.hoanguyen.compose.onlinestore.features.main.home.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications

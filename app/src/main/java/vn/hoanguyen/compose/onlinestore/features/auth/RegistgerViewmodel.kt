@@ -20,7 +20,7 @@ class RegisterViewmodel @Inject constructor(
     val loading = mutableStateOf(false)
     val error = mutableStateOf("")
 
-    fun register(navigateToHome: () -> Unit) {
+    fun register(navigateToMain: () -> Unit) {
         if (fullNameText.value.isEmpty() || emailText.value.isEmpty() || passText.value.isEmpty() || rePassText.value.isEmpty()) {
             error.value = "Please input all fields"
             return
@@ -36,7 +36,7 @@ class RegisterViewmodel @Inject constructor(
             authService.signUpWithEmailAndPassword(emailText.value, passText.value)
                 .fold(onSuccess = {
                     loading.value = false
-                    navigateToHome.invoke()
+                    navigateToMain.invoke()
                 }, onFailure = { e ->
                     loading.value = false
                     error.value = "[${e.message}]"
@@ -44,8 +44,8 @@ class RegisterViewmodel @Inject constructor(
         }
     }
 
-    fun onLoginBySocialNetwork(navigateToHome: () -> Unit) {
+    fun onLoginBySocialNetwork(navigateToMain: () -> Unit) {
         loading.value = false
-        navigateToHome.invoke()
+        navigateToMain.invoke()
     }
 }

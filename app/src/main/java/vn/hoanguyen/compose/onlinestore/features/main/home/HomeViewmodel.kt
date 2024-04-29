@@ -1,4 +1,4 @@
-package vn.hoanguyen.compose.onlinestore.features.home
+package vn.hoanguyen.compose.onlinestore.features.main.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -71,6 +71,7 @@ dependencies {
 
     implementation(libs.gson)
     implementation(libs.coil)
+    implementation("com.canopas.compose-animated-navigationbar:bottombar:1.0.1")
 
     //UI
     implementation(libs.androidx.compose.material.iconsExtended)

@@ -6,29 +6,40 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import vn.hoanguyen.compose.onlinestore.features.EmptyScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.ForgotPasswordScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.LoginScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.OTPScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.RegisterScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.ResetPasswordScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.WelcomeScreen
-import vn.hoanguyen.compose.onlinestore.features.home.HomeScreen
+import vn.hoanguyen.compose.onlinestore.features.main.MainScreen
+import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
 import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 
 
 @Composable
 fun NavGraph(navController: NavHostController) {
     NavHost(
-        navController = navController, startDestination = NavRoute.Home.path
+        navController = navController, startDestination = NavRoute.Main.path
     ) {
         addSplashScreen(navController)
         addWelcomeScreen(navController)
         addLoginScreen(navController)
         addRegisterScreen(navController)
         addForgotPasswordScreen(navController)
-        addHomeScreen(navController)
+        addMainScreen(navController)
         addOTPScreen(navController)
         addResetPassScreen(navController)
+    }
+}
+
+@Composable
+fun NavBottomBarGraph(navController: NavHostController) {
+    NavHost(
+        navController = navController, startDestination = NavRoute.Home.path
+    ) {
+        addBottomBarScreen(navController)
     }
 }
 
@@ -41,11 +52,13 @@ private fun NavGraphBuilder.addSplashScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.Splash.path) {
-        SplashScreen(onNavigateWelcome = {
-            navController.navigate(NavRoute.Welcome.path) { clear(NavRoute.Splash.path) }
-        }, onNavigateHome = {
-            navController.navigate(NavRoute.Home.path) { clear(NavRoute.Splash.path) }
-        })
+        SplashScreen(
+            onNavigateWelcome = {
+                navController.navigate(NavRoute.Welcome.path) { clear(NavRoute.Splash.path) }
+            },
+            onNavigateMain = {
+                navController.navigate(NavRoute.Main.path) { clear(NavRoute.Splash.path) }
+            })
     }
 }
 
@@ -69,8 +82,8 @@ private fun NavGraphBuilder.addLoginScreen(
                     clear(NavRoute.Login.path)
                 }
             },
-            navigateToHome = {
-                navController.navigate(NavRoute.Home.path) {
+            navigateToMain = {
+                navController.navigate(NavRoute.Main.path) {
                     clear(NavRoute.Login.path)
                 }
             },
@@ -91,8 +104,8 @@ private fun NavGraphBuilder.addRegisterScreen(
                     clear(NavRoute.Register.path)
                 }
             },
-            navigateToHome = {
-                navController.navigate(NavRoute.Home.path) {
+            navigateToMain = {
+                navController.navigate(NavRoute.Main.path) {
                     clear(NavRoute.Register.path)
                 }
             },
@@ -100,11 +113,31 @@ private fun NavGraphBuilder.addRegisterScreen(
     }
 }
 
-private fun NavGraphBuilder.addHomeScreen(
+private fun NavGraphBuilder.addMainScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.Main.path) {
+        MainScreen(navController)
+    }
+}
+
+private fun NavGraphBuilder.addBottomBarScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.Home.path) {
         HomeScreen()
+    }
+    composable(route = NavRoute.Search.path) {
+        EmptyScreen("Search")
+    }
+    composable(route = NavRoute.Saved.path) {
+        EmptyScreen("Saved")
+    }
+    composable(route = NavRoute.Cart.path) {
+        EmptyScreen("Cart")
+    }
+    composable(route = NavRoute.Account.path) {
+        EmptyScreen("Account")
     }
 }
 

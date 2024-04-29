@@ -9,13 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun EmptyScreen() {
+fun EmptyScreen(title: String = "") {
     Surface {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text("EmptyScreen")
+            Text(title.ifEmpty { "EmptyScreen" })
         }
     }
 }

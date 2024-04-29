@@ -59,7 +59,7 @@ import vn.hoanguyen.compose.onlinestore.utils.isValidPassword
 fun LoginScreen(
     loginViewmodel: LoginViewmodel = hiltViewModel(),
     navigateToRegister: () -> Unit,
-    navigateToHome: () -> Unit,
+    navigateToMain: () -> Unit,
     navigateToForgotPassword: () -> Unit,
 ) {
     var emailText by rememberSaveable { loginViewmodel.emailText }
@@ -73,8 +73,8 @@ fun LoginScreen(
         isLoading = loading,
         onEmailValueChange = { emailText = it },
         onPasswordValueChange = { passText = it },
-        onActionLoginEmail = { loginViewmodel.login(navigateToHome) },
-        onActionLoginBySocialNetwork = { loginViewmodel.onLoginBySocialNetwork(navigateToHome) },
+        onActionLoginEmail = { loginViewmodel.login(navigateToMain) },
+        onActionLoginBySocialNetwork = { loginViewmodel.onLoginBySocialNetwork(navigateToMain) },
         onNavigateToRegister = navigateToRegister,
         onNavigateToForgotPassword = navigateToForgotPassword,
     )

@@ -1,4 +1,4 @@
-package vn.hoanguyen.compose.onlinestore.features.home.components
+package vn.hoanguyen.compose.onlinestore.features.main.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

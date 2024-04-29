@@ -62,7 +62,7 @@ import vn.hoanguyen.compose.onlinestore.utils.isValidPassword
 fun RegisterScreen(
     viewmodel: RegisterViewmodel = hiltViewModel(),
     navigateToLogin: () -> Unit,
-    navigateToHome: () -> Unit,
+    navigateToMain: () -> Unit,
 ) {
     var fullNameText by rememberSaveable { viewmodel.fullNameText }
     var emailText by rememberSaveable { viewmodel.emailText }
@@ -82,8 +82,8 @@ fun RegisterScreen(
         onPasswordValueChange = { passText = it },
         onRePasswordValueChange = { rePassText = it },
         onNavigateToLogin = navigateToLogin,
-        onActionRegisterEmail = { viewmodel.register(navigateToHome) },
-        onActionRegisterBySocialNetwork = { viewmodel.onLoginBySocialNetwork(navigateToHome) },
+        onActionRegisterEmail = { viewmodel.register(navigateToMain) },
+        onActionRegisterBySocialNetwork = { viewmodel.onLoginBySocialNetwork(navigateToMain) },
     )
 
     when {

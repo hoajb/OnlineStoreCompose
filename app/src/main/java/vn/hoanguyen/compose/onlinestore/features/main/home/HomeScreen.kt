@@ -1,4 +1,4 @@
-package vn.hoanguyen.compose.onlinestore.features.home
+package vn.hoanguyen.compose.onlinestore.features.main.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,11 +16,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import vn.hoanguyen.compose.onlinestore.data_providers.Product
-import vn.hoanguyen.compose.onlinestore.features.home.components.FilterItem
-import vn.hoanguyen.compose.onlinestore.features.home.components.FilterSelectionBar
-import vn.hoanguyen.compose.onlinestore.features.home.components.HomeAppBar
-import vn.hoanguyen.compose.onlinestore.features.home.components.HomeListProduct
-import vn.hoanguyen.compose.onlinestore.features.home.components.HomeSearchBar
+import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterItem
+import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterSelectionBar
+import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeAppBar
+import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeListProduct
+import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeSearchBar
 
 @Composable
 fun HomeScreen(

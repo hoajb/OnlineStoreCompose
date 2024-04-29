@@ -18,7 +18,7 @@ class LoginViewmodel @Inject constructor(
     val loading = mutableStateOf(false)
     val error = mutableStateOf("")
 
-    fun login(navigateToHome: () -> Unit) {
+    fun login(navigateToMain: () -> Unit) {
         if (emailText.value.isEmpty() || passText.value.isEmpty()) {
             error.value = "Email or Pass is invalid"
             return
@@ -28,7 +28,7 @@ class LoginViewmodel @Inject constructor(
             authService.signInWithEmailAndPassword(emailText.value, passText.value).fold(
                 onSuccess = {
                     loading.value = false
-                    navigateToHome.invoke()
+                    navigateToMain.invoke()
                 },
                 onFailure = { e ->
                     loading.value = false
@@ -38,8 +38,8 @@ class LoginViewmodel @Inject constructor(
         }
     }
 
-    fun onLoginBySocialNetwork(navigateToHome: () -> Unit) {
+    fun onLoginBySocialNetwork(navigateToMain: () -> Unit) {
         loading.value = false
-        navigateToHome.invoke()
+        navigateToMain.invoke()
     }
 }
