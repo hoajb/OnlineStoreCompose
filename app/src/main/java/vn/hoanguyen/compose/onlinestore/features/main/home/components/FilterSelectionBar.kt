@@ -20,40 +20,52 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 import javax.inject.Inject
 
-@HiltViewModel
-class FilterSelectionBarViewModel @Inject constructor() : ViewModel() {
+@HiltViewModel()
+class FilterSelectionBarViewModel @Inject constructor(
+) : ViewModel() {
     private val _selectedIndexList = mutableStateListOf<Int>()
     val selectedIndexList: List<Int> = _selectedIndexList
 
-    fun select(index: Int) {
-        if (index == 0) {//All
-            _selectedIndexList.clear()
-            _selectedIndexList.add(0)
-            return
-        }
-        _selectedIndexList.remove(0)
-        if (_selectedIndexList.contains(index)) {
-            _selectedIndexList.remove(index)
-        } else {
-            _selectedIndexList.add(index)
+    fun select(index: Int, filterChoice: FilterChoice = FilterChoice.Multi) {
+        if (filterChoice == FilterChoice.Multi) {
+            if (index == 0) {//All
+                _selectedIndexList.clear()
+                _selectedIndexList.add(0)
+                return
+            }
+            _selectedIndexList.remove(0)
+            if (_selectedIndexList.contains(index)) {
+                _selectedIndexList.remove(index)
+            } else {
+                _selectedIndexList.add(index)
+            }
+        } else { //Single
+            if (_selectedIndexList.contains(index).not()) {
+                _selectedIndexList.clear()
+                _selectedIndexList.add(index)
+            }
         }
     }
 }
 
 data class FilterItem(
-    val id: Int,
-    val text: String
+    val id: Int, val text: String
 )
+
+enum class FilterChoice {
+    Single, Multi
+}
 
 @Composable
 fun FilterSelectionBar(
-    viewmodel: FilterSelectionBarViewModel = hiltViewModel(),
+    viewmodel: FilterSelectionBarViewModel,
+    filterChoice: FilterChoice = FilterChoice.Multi,
     listItem: List<FilterItem> = emptyList(),
     onSelectedChange: (List<Int>) -> Unit
 ) {
@@ -62,8 +74,8 @@ fun FilterSelectionBar(
     Box(
         Modifier
             .fillMaxWidth()
-            .padding(10.dp)
-            .background(color = Color.White)
+            .padding(vertical = 10.dp)
+            .background(color = Color.Transparent)
     ) {
         LazyRow(
             Modifier
@@ -79,25 +91,22 @@ fun FilterSelectionBar(
                     modifier = Modifier
                         .fillMaxWidth()
                         .defaultMinSize(minWidth = 100.dp)
-                        .padding(4.dp)
+                        .padding(vertical = 4.dp, horizontal = 4.dp)
                         .border(
-                            width = 0.5.dp, color = Color.LightGray,
+                            width = 0.5.dp,
+                            color = Color.LightGray,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .background(
                             color = if (selectedIndexList.contains(index)) Color.Black
-                            else Color.Transparent,
-                            shape = RoundedCornerShape(12.dp)
+                            else Color.Transparent, shape = RoundedCornerShape(12.dp)
                         )
                         .clip(shape = RoundedCornerShape(12.dp))
-                        .selectable(
-                            selected = selectedIndexList.contains(index),
-                            onClick = {
-                                viewmodel.select(index)
-                                onSelectedChange.invoke(selectedIndexList)
-                            }
-                        )
-                        .padding(6.dp)
+                        .selectable(selected = selectedIndexList.contains(index), onClick = {
+                            viewmodel.select(index, filterChoice)
+                            onSelectedChange.invoke(selectedIndexList)
+                        })
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
                 )
             }
         }
@@ -109,9 +118,10 @@ fun FilterSelectionBar(
 private fun FilterSelectionBarPrev() {
     Surface {
         FilterSelectionBar(
+            viewmodel = viewModel(),
             listItem = listOf(
                 FilterItem(id = 1, "All"),
-                FilterItem(id = 1, "T-Shirts"),
+                FilterItem(id = 1, "T-Shirts T-Shirts"),
                 FilterItem(id = 1, "Jeans"),
                 FilterItem(id = 1, "Shoes"),
                 FilterItem(id = 1, "Liz"),

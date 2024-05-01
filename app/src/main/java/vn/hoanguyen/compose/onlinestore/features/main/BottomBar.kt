@@ -34,6 +34,7 @@ import com.example.bottombar.AnimatedBottomBar
 import com.example.bottombar.components.BottomBarItem
 import com.example.bottombar.model.IndicatorStyle
 import com.example.bottombar.model.VisibleItem
+import vn.hoanguyen.compose.onlinestore.components.AppDivider
 import vn.hoanguyen.compose.onlinestore.navigation.NavRoute
 
 sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: String) {
@@ -46,7 +47,7 @@ sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: 
 
 val bottomNavItems = listOf(
     BottomNavItem.Home,
-    BottomNavItem.Search,
+//    BottomNavItem.Search, //no search
     BottomNavItem.Saved,
     BottomNavItem.Cart,
     BottomNavItem.Profile,
@@ -59,7 +60,7 @@ fun AppBottomNavigationBar(navController: NavController) {
     var selectedItem by remember { mutableIntStateOf(0) }
 
     Column {
-        Divider(color = Color.LightGray)
+        AppDivider()
         AnimatedBottomBar(
             selectedItem = selectedItem,
             itemSize = bottomNavItems.size,

@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import vn.hoanguyen.compose.onlinestore.R
+import vn.hoanguyen.compose.onlinestore.components.AppDivider
 import vn.hoanguyen.compose.onlinestore.components.AppPasswordTextField
 import vn.hoanguyen.compose.onlinestore.components.AppTextField
 import vn.hoanguyen.compose.onlinestore.components.dialog.AppDialog
@@ -247,12 +248,12 @@ private fun RegisterBody(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Divider(Modifier.weight(1f), color = Color.Black.copy(alpha = 0.1f))
+                    AppDivider(Modifier.weight(1f))
                     Text(
                         "Or", modifier = Modifier.padding(horizontal = 8.dp),
                         style = AppTypography.bodyMedium.copy(color = Color.Gray)
                     )
-                    Divider(Modifier.weight(1f), color = Color.Black.copy(alpha = 0.1f))
+                    AppDivider(Modifier.weight(1f))
                 }
 
                 Spacer(modifier = Modifier.size(20.dp))
