@@ -15,6 +15,7 @@ private object Path {
     const val SAVED = "saved"
     const val CART = "cart"
     const val ACCOUNT = "account"
+    const val CHECKOUT = "checkout"
 }
 
 sealed class NavRoute(val path: String) {
@@ -31,6 +32,7 @@ sealed class NavRoute(val path: String) {
     data object Search : NavRoute(Path.SEARCH)
     data object Cart : NavRoute(Path.CART)
     data object Account : NavRoute(Path.ACCOUNT)
+    data object Checkout : NavRoute(Path.CHECKOUT)
 
     data object Profile : NavRoute(Path.PROFILE) {
         val id = "id"

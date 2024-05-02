@@ -52,7 +52,12 @@ fun HomeListProduct(
     onFavoritePressed: (Product) -> Unit
 ) {
     if (listProduct.isEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.White),
+            contentAlignment = Alignment.Center
+        ) {
             emptyItem()
         }
     } else {

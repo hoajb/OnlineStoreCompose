@@ -14,6 +14,8 @@ import vn.hoanguyen.compose.onlinestore.features.auth.RegisterScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.ResetPasswordScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.WelcomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.MainScreen
+import vn.hoanguyen.compose.onlinestore.features.main.cart.CartScreen
+import vn.hoanguyen.compose.onlinestore.features.main.checkout.CheckoutScreen
 import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedScreen
 import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
@@ -32,15 +34,19 @@ fun NavGraph(navController: NavHostController) {
         addMainScreen(navController)
         addOTPScreen(navController)
         addResetPassScreen(navController)
+        addCheckoutScreen(navController)
     }
 }
 
 @Composable
-fun NavBottomBarGraph(navController: NavHostController) {
+fun NavBottomBarGraph(
+    navBottomBarController: NavHostController,
+    navMainController: NavHostController
+) {
     NavHost(
-        navController = navController, startDestination = NavRoute.Home.path
+        navController = navBottomBarController, startDestination = NavRoute.Home.path
     ) {
-        addBottomBarScreen(navController)
+        addBottomBarScreen(navMainController)
     }
 }
 
@@ -123,7 +129,7 @@ private fun NavGraphBuilder.addMainScreen(
 }
 
 private fun NavGraphBuilder.addBottomBarScreen(
-    navController: NavHostController,
+    navMainController: NavHostController,
 ) {
     composable(route = NavRoute.Home.path) {
         HomeScreen()
@@ -135,7 +141,11 @@ private fun NavGraphBuilder.addBottomBarScreen(
         SavedScreen()
     }
     composable(route = NavRoute.Cart.path) {
-        EmptyScreen("Cart")
+        CartScreen(
+            onNavigateToCheckout = {
+                navMainController.navigate(NavRoute.Checkout.path)
+            }
+        )
     }
     composable(route = NavRoute.Account.path) {
         EmptyScreen("Account")
@@ -187,5 +197,13 @@ private fun NavGraphBuilder.addResetPassScreen(
                 navController.navigate(NavRoute.Login.path) { clear(NavRoute.Login.path) }
             }
         )
+    }
+}
+
+private fun NavGraphBuilder.addCheckoutScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.Checkout.path) {
+        CheckoutScreen()
     }
 }

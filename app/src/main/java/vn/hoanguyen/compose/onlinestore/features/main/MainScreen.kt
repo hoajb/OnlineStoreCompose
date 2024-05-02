@@ -17,7 +17,7 @@ fun MainScreen(navMainController: NavHostController) {
         bottomBar = { AppBottomNavigationBar(rememberNavBottomBarController) }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
-            NavBottomBarGraph(rememberNavBottomBarController)
+            NavBottomBarGraph(rememberNavBottomBarController, navMainController)
         }
     }
 }
