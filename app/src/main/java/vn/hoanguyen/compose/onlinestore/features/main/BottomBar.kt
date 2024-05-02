@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -42,7 +44,8 @@ sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: 
     data object Search : BottomNavItem(NavRoute.Search.path, Icons.Outlined.Search, "Search")
     data object Saved : BottomNavItem(NavRoute.Saved.path, Icons.Outlined.FavoriteBorder, "Saved")
     data object Cart : BottomNavItem(NavRoute.Cart.path, Icons.Outlined.ShoppingCart, "Cart")
-    data object Profile : BottomNavItem(NavRoute.Account.path, Icons.Outlined.Person, "Account")
+    data object Profile :
+        BottomNavItem(NavRoute.Account.path, Icons.Outlined.AccountCircle, "Account")
 }
 
 val bottomNavItems = listOf(
@@ -60,7 +63,10 @@ fun AppBottomNavigationBar(navController: NavController) {
     var selectedItem by remember { mutableIntStateOf(0) }
 
     Column {
-        AppDivider()
+        Divider(
+            thickness = 0.5.dp,
+            color = Color.Gray.copy(alpha = 0.5f)
+        )
         AnimatedBottomBar(
             selectedItem = selectedItem,
             itemSize = bottomNavItems.size,

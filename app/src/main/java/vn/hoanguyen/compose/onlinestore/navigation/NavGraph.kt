@@ -14,6 +14,7 @@ import vn.hoanguyen.compose.onlinestore.features.auth.RegisterScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.ResetPasswordScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.WelcomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.MainScreen
+import vn.hoanguyen.compose.onlinestore.features.main.account.AccountScreen
 import vn.hoanguyen.compose.onlinestore.features.main.cart.CartScreen
 import vn.hoanguyen.compose.onlinestore.features.main.checkout.CheckoutScreen
 import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
@@ -35,6 +36,14 @@ fun NavGraph(navController: NavHostController) {
         addOTPScreen(navController)
         addResetPassScreen(navController)
         addCheckoutScreen(navController)
+
+        addMyOrdersScreen(navController)
+        addMyDetailsScreen(navController)
+        addAddressBookScreen(navController)
+        addPaymentMethodScreen(navController)
+        addNotificationsScreen(navController)
+        addFAQSScreen(navController)
+        addHelpCenterScreen(navController)
     }
 }
 
@@ -55,6 +64,11 @@ private fun NavOptionsBuilder.clear(path: String) {
     launchSingleTop = true
 }
 
+private fun NavOptionsBuilder.clearMain(path: String) {
+    popUpTo(path) { inclusive = true }
+    launchSingleTop = false
+}
+
 private fun NavGraphBuilder.addSplashScreen(
     navController: NavHostController,
 ) {
@@ -64,7 +78,7 @@ private fun NavGraphBuilder.addSplashScreen(
                 navController.navigate(NavRoute.Welcome.path) { clear(NavRoute.Splash.path) }
             },
             onNavigateMain = {
-                navController.navigate(NavRoute.Main.path) { clear(NavRoute.Splash.path) }
+                navController.navigate(NavRoute.Main.path) { clearMain(NavRoute.Splash.path) }
             })
     }
 }
@@ -91,7 +105,7 @@ private fun NavGraphBuilder.addLoginScreen(
             },
             navigateToMain = {
                 navController.navigate(NavRoute.Main.path) {
-                    clear(NavRoute.Login.path)
+                    clearMain(NavRoute.Login.path)
                 }
             },
             navigateToForgotPassword = {
@@ -113,7 +127,7 @@ private fun NavGraphBuilder.addRegisterScreen(
             },
             navigateToMain = {
                 navController.navigate(NavRoute.Main.path) {
-                    clear(NavRoute.Register.path)
+                    clearMain(NavRoute.Register.path)
                 }
             },
         )
@@ -148,7 +162,13 @@ private fun NavGraphBuilder.addBottomBarScreen(
         )
     }
     composable(route = NavRoute.Account.path) {
-        EmptyScreen("Account")
+        AccountScreen(
+            onNavigateMenu = { path -> navMainController.navigate(path) },
+            onLogout = {
+                navMainController.navigate(NavRoute.Login.path) {
+                    clear(NavRoute.Main.path)
+                }
+            })
     }
 }
 
@@ -204,6 +224,78 @@ private fun NavGraphBuilder.addCheckoutScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.Checkout.path) {
-        CheckoutScreen()
+        CheckoutScreen() {
+            navController.popBackStack()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addMyOrdersScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.MyOrders.path) {
+        EmptyScreen("My Orders") {
+            navController.popBackStack()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addMyDetailsScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.MyDetails.path) {
+        EmptyScreen("My Details") {
+            navController.popBackStack()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addAddressBookScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.AddressBook.path) {
+        EmptyScreen("Address Book") {
+            navController.popBackStack()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addPaymentMethodScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.PaymentMethods.path) {
+        EmptyScreen("Payment Methods") {
+            navController.popBackStack()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addNotificationsScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.Notification.path) {
+        EmptyScreen("Notifications") {
+            navController.popBackStack()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addFAQSScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.FAQS.path) {
+        EmptyScreen("FAQs") {
+            navController.popBackStack()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addHelpCenterScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.HelpCenter.path) {
+        EmptyScreen("Help Center") {
+            navController.popBackStack()
+        }
     }
 }

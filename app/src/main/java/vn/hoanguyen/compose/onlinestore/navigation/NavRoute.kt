@@ -16,6 +16,14 @@ private object Path {
     const val CART = "cart"
     const val ACCOUNT = "account"
     const val CHECKOUT = "checkout"
+
+    const val MY_ORDERS = "my_orders"
+    const val MY_DETAILS = "my_details"
+    const val ADDRESS_BOOK = "address_book"
+    const val PAYMENT_METHODS = "payment_methods"
+    const val NOTIFICATION = "notification"
+    const val FAQS = "faqs"
+    const val HELP_CENTER = "help_center"
 }
 
 sealed class NavRoute(val path: String) {
@@ -33,6 +41,15 @@ sealed class NavRoute(val path: String) {
     data object Cart : NavRoute(Path.CART)
     data object Account : NavRoute(Path.ACCOUNT)
     data object Checkout : NavRoute(Path.CHECKOUT)
+
+    data object MyOrders : NavRoute(Path.MY_ORDERS)
+    data object MyDetails : NavRoute(Path.MY_DETAILS)
+    data object AddressBook : NavRoute(Path.ADDRESS_BOOK)
+    data object PaymentMethods : NavRoute(Path.PAYMENT_METHODS)
+    data object Notification : NavRoute(Path.NOTIFICATION)
+    data object FAQS : NavRoute(Path.FAQS)
+    data object HelpCenter : NavRoute(Path.HELP_CENTER)
+
 
     data object Profile : NavRoute(Path.PROFILE) {
         val id = "id"

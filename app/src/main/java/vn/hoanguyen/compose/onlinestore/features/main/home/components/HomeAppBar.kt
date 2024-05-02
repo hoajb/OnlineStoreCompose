@@ -3,7 +3,7 @@
 package vn.hoanguyen.compose.onlinestore.features.main.home.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.NotificationsActive
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,8 +21,7 @@ import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeAppBar(
-    title: String,
-    onNavigateNotification: () -> Unit
+    title: String, onNavigateNotification: () -> Unit
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -37,12 +36,11 @@ fun HomeAppBar(
                 style = AppTypography.headlineLarge.copy(
                     color = Color.Black
                 )
-
             )
         },
         actions = {
             IconButton(onClick = onNavigateNotification) {
-                Icon(Icons.Outlined.Notifications, contentDescription = "notification")
+                Icon(Icons.Outlined.NotificationsActive, contentDescription = "notification")
             }
         },
     )
