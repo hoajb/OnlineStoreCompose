@@ -15,6 +15,7 @@ import vn.hoanguyen.compose.onlinestore.features.auth.ResetPasswordScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.WelcomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.MainScreen
 import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
+import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedScreen
 import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 
 
@@ -131,7 +132,7 @@ private fun NavGraphBuilder.addBottomBarScreen(
         EmptyScreen("Search")
     }
     composable(route = NavRoute.Saved.path) {
-        EmptyScreen("Saved")
+        SavedScreen()
     }
     composable(route = NavRoute.Cart.path) {
         EmptyScreen("Cart")

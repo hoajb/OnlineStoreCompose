@@ -65,6 +65,7 @@ enum class FilterChoice {
 @Composable
 fun FilterSelectionBar(
     viewmodel: FilterSelectionBarViewModel,
+    modifier: Modifier = Modifier,
     filterChoice: FilterChoice = FilterChoice.Multi,
     listItem: List<FilterItem> = emptyList(),
     onSelectedChange: (List<Int>) -> Unit
@@ -72,7 +73,7 @@ fun FilterSelectionBar(
     val selectedIndexList = viewmodel.selectedIndexList
 
     Box(
-        Modifier
+        modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp)
             .background(color = Color.Transparent)

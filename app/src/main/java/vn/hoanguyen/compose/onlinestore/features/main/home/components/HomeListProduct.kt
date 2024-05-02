@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,7 +37,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import vn.hoanguyen.compose.onlinestore.data_providers.Product
+import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedProductListEmptyItem
 import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
+import vn.hoanguyen.compose.onlinestore.ui.theme.ColorRed
 import vn.hoanguyen.compose.onlinestore.ui.theme.OnlineStoreComposeTheme
 import vn.hoanguyen.compose.onlinestore.utils.formatAsCurrency
 
@@ -43,20 +47,30 @@ import vn.hoanguyen.compose.onlinestore.utils.formatAsCurrency
 fun HomeListProduct(
     modifier: Modifier = Modifier,
     listProduct: List<Product>,
+    defaultFavorite: Boolean = false, // useful for Saved Items Page
+    emptyItem: @Composable () -> Unit = {},
     onFavoritePressed: (Product) -> Unit
 ) {
-    LazyVerticalGrid(
-        modifier = modifier,
-        columns = GridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        items(listProduct) { product ->
-            ProductItem(
-                product = product,
-                isFavorite = false,
-                onFavoritePressed = onFavoritePressed
-            )
+    if (listProduct.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            emptyItem()
+        }
+    } else {
+        LazyVerticalGrid(
+            modifier = modifier,
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            items(listProduct) { product ->
+                key(product.id) {
+                    ProductItem(
+                        product = product,
+                        defaultFavorite = defaultFavorite,
+                        onFavoritePressed = onFavoritePressed
+                    )
+                }
+            }
         }
     }
 }
@@ -64,11 +78,11 @@ fun HomeListProduct(
 @Composable
 fun ProductItem(
     product: Product,
-    isFavorite: Boolean = false,
+    defaultFavorite: Boolean = false,
     onFavoritePressed: (Product) -> Unit
 ) {
     var isFavoriteState by remember {
-        mutableStateOf(isFavorite)
+        mutableStateOf(defaultFavorite)
     }
     Column {
         Box(
@@ -94,13 +108,17 @@ fun ProductItem(
                     .clip(RoundedCornerShape(6.dp))
                     .align(Alignment.TopEnd)
                     .clickable {
-                        isFavoriteState = isFavoriteState.not()
+                        if (defaultFavorite.not()) {
+                            isFavoriteState = isFavoriteState.not()
+                        }
                         onFavoritePressed(product)
-                    }.padding(4.dp),
+                    }
+                    .padding(4.dp),
             ) {
                 Icon(
                     imageVector = if (isFavoriteState)
                         Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder,
+                    tint = if (isFavoriteState) ColorRed else Color.Black,
                     contentDescription = "Favorite"
                 )
             }
@@ -122,7 +140,6 @@ fun ProductItem(
     }
 }
 
-
 @Preview
 @Composable
 private fun HomeListProductPrev() {
@@ -142,4 +159,16 @@ private fun HomeListProductPrev() {
         ) {}
     }
 }
+
+@Preview
+@Composable
+private fun HomeListProductEmptyPrev() {
+    OnlineStoreComposeTheme {
+        HomeListProduct(
+            listProduct = emptyList(),
+            emptyItem = { SavedProductListEmptyItem() }
+        ) {}
+    }
+}
+
 

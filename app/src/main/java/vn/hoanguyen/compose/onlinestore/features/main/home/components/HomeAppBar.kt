@@ -21,6 +21,7 @@ import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeAppBar(
+    title: String,
     onNavigateNotification: () -> Unit
 ) {
     TopAppBar(
@@ -30,7 +31,7 @@ fun HomeAppBar(
         ),
         title = {
             Text(
-                "Discover",
+                title,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = AppTypography.headlineLarge.copy(
@@ -51,6 +52,6 @@ fun HomeAppBar(
 @Composable
 private fun HomeAppBarPrev() {
     Surface {
-        HomeAppBar() {}
+        HomeAppBar(title = "Discover") {}
     }
 }

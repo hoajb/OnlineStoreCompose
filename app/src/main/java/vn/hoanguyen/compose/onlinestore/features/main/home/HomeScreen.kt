@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -27,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
+import vn.hoanguyen.compose.onlinestore.components.ListEmptyItem
 import vn.hoanguyen.compose.onlinestore.data_providers.Product
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterChoice
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterItem
@@ -37,7 +42,6 @@ import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeAppBar
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeListProduct
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeSearchBar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     viewmodel: HomeViewmodel = hiltViewModel()
@@ -82,9 +86,11 @@ private fun HomeBody(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
         ) {
-            HomeAppBar(onNavigateNotification = {
-                //TODO
-            })
+            HomeAppBar(
+                title = "Discover",
+                onNavigateNotification = {
+                    //TODO
+                })
 
             HomeSearchBar(onSearch = {}, onFilter = {
                 showBottomSheet = true
@@ -92,6 +98,7 @@ private fun HomeBody(
 
 
             FilterSelectionBar(
+                modifier = Modifier.padding(horizontal = 16.dp),
                 viewmodel = viewModelFilterSelectionBar,
                 listItem = listFilter.mapIndexed { index, item ->
                     FilterItem(id = index, text = item)
@@ -111,6 +118,7 @@ private fun HomeBody(
                     .weight(1f)
                     .padding(16.dp),
                 listProduct = listProduct,
+                emptyItem = { HomeProductListEmptyItem() },
                 onFavoritePressed = {}
             )
         }
@@ -137,6 +145,16 @@ private fun HomeBody(
             )
         }
     }
+}
+
+
+@Composable
+fun HomeProductListEmptyItem() {
+    ListEmptyItem(
+        icon = Icons.Outlined.List,
+        title = "No Product Items!",
+        content = "Some thing went wrong.\nTry again later.",
+    )
 }
 
 @Preview
