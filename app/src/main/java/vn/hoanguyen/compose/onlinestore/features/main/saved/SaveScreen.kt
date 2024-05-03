@@ -29,6 +29,7 @@ import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeListPr
 @Composable
 fun SavedScreen(
     viewmodel: SavedViewmodel = hiltViewModel(),
+    onNavigateProductDetails: (String) -> Unit
 ) {
     val listProduct = viewmodel.listProduct.collectAsState()
 
@@ -38,12 +39,14 @@ fun SavedScreen(
 
     SavedBody(
         listProduct = listProduct.value,
+        onNavigateProductDetails = onNavigateProductDetails
     )
 }
 
 @Composable
 private fun SavedBody(
     listProduct: List<Product>,
+    onNavigateProductDetails: (String) -> Unit
 ) {
     // remove item only in UI
     val listState = remember { mutableStateListOf(*listProduct.toTypedArray()) }
@@ -75,7 +78,8 @@ private fun SavedBody(
                 },
                 onFavoritePressed = {
                     listState.remove(it)
-                }
+                },
+                onItemPressed = onNavigateProductDetails
             )
         }
     }
@@ -103,9 +107,11 @@ private fun HomeScreenPrev() {
                 id = it.toString(),
                 description = "No",
                 imageUrl = "https://static.pullandbear.net/2/photos//2024/V/0/2/p/3241/570/711/3241570711_2_1_8.jpg?t=1713773719598&imwidth=1125",
-                category = "TShirt"
+                category = "TShirt",
+                sizeList = listOf("S","M","L")
             )
         },
+        onNavigateProductDetails = {},
     )
 
 }
@@ -115,5 +121,6 @@ private fun HomeScreenPrev() {
 private fun HomeScreenEmptyPrev() {
     SavedBody(
         listProduct = listOf(),
+        onNavigateProductDetails = {}
     )
 }

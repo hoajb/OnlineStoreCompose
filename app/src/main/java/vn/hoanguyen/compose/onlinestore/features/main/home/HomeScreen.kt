@@ -44,7 +44,8 @@ import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeSearch
 
 @Composable
 fun HomeScreen(
-    viewmodel: HomeViewmodel = hiltViewModel()
+    viewmodel: HomeViewmodel = hiltViewModel(),
+    onNavigateProductDetails: (String) -> Unit
 ) {
     val listFilter = viewmodel.listOfFilter.collectAsState()
     val listProduct = viewmodel.listProduct.collectAsState()
@@ -60,7 +61,8 @@ fun HomeScreen(
         listProduct = listProduct.value,
         onSelectedFilterCategoryChange = { listCategory ->
             viewmodel.loadProductList(listCategory)
-        }
+        },
+        onNavigateProductDetails = onNavigateProductDetails
     )
 }
 
@@ -69,7 +71,8 @@ fun HomeScreen(
 private fun HomeBody(
     listFilter: List<String>,
     listProduct: List<Product>,
-    onSelectedFilterCategoryChange: (List<String>) -> Unit
+    onSelectedFilterCategoryChange: (List<String>) -> Unit,
+    onNavigateProductDetails: (String) -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val sheetState = rememberModalBottomSheetState()
@@ -119,7 +122,8 @@ private fun HomeBody(
                     .padding(16.dp),
                 listProduct = listProduct,
                 emptyItem = { HomeProductListEmptyItem() },
-                onFavoritePressed = {}
+                onFavoritePressed = {},
+                onItemPressed = onNavigateProductDetails
             )
         }
     }
@@ -171,10 +175,12 @@ private fun HomeScreenPrev() {
                 id = it.toString(),
                 description = "No",
                 imageUrl = "https://static.pullandbear.net/2/photos//2024/V/0/2/p/3241/570/711/3241570711_2_1_8.jpg?t=1713773719598&imwidth=1125",
-                category = "TShirt"
+                category = "TShirt",
+                sizeList = listOf("S","M","L")
             )
         },
-        onSelectedFilterCategoryChange = {}
+        onSelectedFilterCategoryChange = {},
+        onNavigateProductDetails = {}
 
     )
 }

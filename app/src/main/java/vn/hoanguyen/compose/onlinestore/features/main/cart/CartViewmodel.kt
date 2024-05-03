@@ -46,15 +46,14 @@ class CartViewmodel @Inject constructor(
 
     fun loadCartProductList() {
         viewModelScope.launch {
-            val fakeEmptyCart = Random.nextBoolean()
-            _listProduct.emit(if (fakeEmptyCart) emptyList()
-            else productService.getProductList(listCategory = emptyList()).reversed().take(4).map {
-                CartProduct(
-                    product = it,
-                    size = if (it.name.length % 2 == 0) "L" else "M",
-                    number = 1
-                )
-            })
+            _listProduct.emit(
+                productService.getProductList(listCategory = emptyList()).reversed().take(4).map {
+                    CartProduct(
+                        product = it,
+                        size = if (it.name.length % 2 == 0) "L" else "M",
+                        quantity = 1
+                    )
+                })
             updateSubTotal()
         }
     }
@@ -73,7 +72,7 @@ class CartViewmodel @Inject constructor(
             val currentCart = _listProduct.value
             val updatedCart = currentCart.map {
                 if (it.product == product && it.size == size) {
-                    it.copy(number = newQuantity)
+                    it.copy(quantity = newQuantity)
                 } else {
                     it
                 }
@@ -86,7 +85,7 @@ class CartViewmodel @Inject constructor(
     private fun updateSubTotal() {
         var newSubTotal = 0.0
         _listProduct.value.forEach { cartItem ->
-            newSubTotal += cartItem.number * cartItem.product.price
+            newSubTotal += cartItem.quantity * cartItem.product.price
 
         }
         _subTotal.value = newSubTotal

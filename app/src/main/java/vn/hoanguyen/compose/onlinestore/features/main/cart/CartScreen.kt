@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -34,16 +33,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import vn.hoanguyen.compose.onlinestore.components.ListEmptyItem
 import vn.hoanguyen.compose.onlinestore.data_providers.CartProduct
 import vn.hoanguyen.compose.onlinestore.data_providers.Product
-import vn.hoanguyen.compose.onlinestore.features.auth.ResetPassStatus
 import vn.hoanguyen.compose.onlinestore.features.main.cart.components.CartListProduct
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeAppBar
 import vn.hoanguyen.compose.onlinestore.utils.formatAsCurrency
-import vn.hoanguyen.compose.onlinestore.utils.isValidPassword
 
 @Composable
 fun CartScreen(
     viewmodel: CartViewmodel = hiltViewModel(),
-    onNavigateToCheckout: () -> Unit
+    onNavigateToCheckout: () -> Unit,
+    onNavigateProductDetails: (String) -> Unit
 ) {
     val listProduct = viewmodel.listProduct.collectAsState()
     val subtotal = viewmodel.subTotal.collectAsState()
@@ -65,7 +63,8 @@ fun CartScreen(
                 product, size, newQuantity
             )
         },
-        onNavigateToCheckout = onNavigateToCheckout
+        onNavigateToCheckout = onNavigateToCheckout,
+        onNavigateProductDetails = onNavigateProductDetails
     )
 
 }
@@ -79,7 +78,8 @@ private fun CartBody(
     total: String,
     onUpdateProductQuantity: (Product, String, Int) -> Unit,
     onDeleteProduct: (Product, String) -> Unit,
-    onNavigateToCheckout: () -> Unit
+    onNavigateToCheckout: () -> Unit,
+    onNavigateProductDetails: (String) -> Unit
 ) {
     Scaffold(Modifier.background(Color.White),
         topBar = {
@@ -109,7 +109,8 @@ private fun CartBody(
                 onDeletePressed = {
                     onDeleteProduct(it.product, it.size)
                 },
-                onUpdateProductQuantity = onUpdateProductQuantity
+                onUpdateProductQuantity = onUpdateProductQuantity,
+                onNavigateProductDetails = onNavigateProductDetails
             )
 
             if (listProduct.isNotEmpty()) Button(
@@ -156,8 +157,9 @@ private fun HomeScreenPrev() {
                 id = it.toString(),
                 description = "No",
                 imageUrl = "https://static.pullandbear.net/2/photos//2024/V/0/2/p/3241/570/711/3241570711_2_1_8.jpg?t=1713773719598&imwidth=1125",
-                category = "TShirt"
-            ), size = "L", number = 1
+                category = "TShirt",
+                sizeList = listOf("S", "M", "L")
+            ), size = "L", quantity = 1
         )
     },
         subtotal = "$5,870",
@@ -166,7 +168,8 @@ private fun HomeScreenPrev() {
         total = "$5,950",
         onUpdateProductQuantity = { _, _, _ -> },
         onDeleteProduct = { _, _ -> },
-        onNavigateToCheckout = {})
+        onNavigateToCheckout = {},
+        onNavigateProductDetails = {})
 
 }
 
@@ -180,5 +183,6 @@ private fun HomeScreenEmptyPrev() {
         total = "$5,950",
         onUpdateProductQuantity = { _, _, _ -> },
         onDeleteProduct = { _, _ -> },
-        onNavigateToCheckout = {})
+        onNavigateToCheckout = {},
+        onNavigateProductDetails = {})
 }

@@ -52,6 +52,7 @@ fun CartListProduct(
     emptyItem: @Composable () -> Unit = {},
     onUpdateProductQuantity: (Product, String, Int) -> Unit,
     onDeletePressed: (CartProduct) -> Unit,
+    onNavigateProductDetails: (String) -> Unit
 ) {
     if (listProduct.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -67,7 +68,8 @@ fun CartListProduct(
                     CartItem(
                         product = product,
                         onDeletePressed = onDeletePressed,
-                        onUpdateProductQuantity = onUpdateProductQuantity
+                        onUpdateProductQuantity = onUpdateProductQuantity,
+                        onNavigateProductDetails = onNavigateProductDetails
                     )
                 }
             }
@@ -138,7 +140,8 @@ fun TotalItem(
 fun CartItem(
     product: CartProduct,
     onUpdateProductQuantity: (Product, String, Int) -> Unit,
-    onDeletePressed: (CartProduct) -> Unit
+    onDeletePressed: (CartProduct) -> Unit,
+    onNavigateProductDetails: (String) -> Unit
 ) {
     Row(
         Modifier
@@ -146,6 +149,9 @@ fun CartItem(
             .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(12.dp))
             .background(color = Color.White)
             .padding(16.dp)
+            .clickable {
+                onNavigateProductDetails.invoke(product.product.id)
+            }
     ) {
 
         AsyncImage(
@@ -199,7 +205,7 @@ fun CartItem(
                     text = product.product.price.formatAsCurrency(),
                     style = AppTypography.titleSmall,
                 )
-                AddItemCart() { newQuantity ->
+                AddItemCart { newQuantity ->
                     onUpdateProductQuantity(product.product, product.size, newQuantity)
                 }
             }
@@ -223,10 +229,11 @@ private fun CartListProductPrev() {
                         id = it.toString(),
                         description = "No",
                         imageUrl = "https://static.pullandbear.net/2/photos//2024/V/0/2/p/3241/570/711/3241570711_2_1_8.jpg?t=1713773719598&imwidth=1125",
-                        category = "TShirt"
+                        category = "TShirt",
+                        sizeList = listOf("S", "M", "L")
                     ),
                     size = "L",
-                    number = 1
+                    quantity = 1
                 )
             },
             subtotal = "$5,870",
@@ -234,8 +241,9 @@ private fun CartListProductPrev() {
             shippingFee = "$80",
             total = "$5,950",
             onUpdateProductQuantity = { _, _, _ -> },
-
-            ) {}
+            onNavigateProductDetails = {},
+            onDeletePressed = {}
+        )
     }
 }
 
@@ -250,8 +258,10 @@ private fun CartListProductEmptyPrev() {
             feeVAT = "$0",
             shippingFee = "$80",
             total = "$5,950",
-            onUpdateProductQuantity = { _, _, _ -> }
-        ) {}
+            onUpdateProductQuantity = { _, _, _ -> },
+            onNavigateProductDetails = {},
+            onDeletePressed = {}
+        )
     }
 }
 

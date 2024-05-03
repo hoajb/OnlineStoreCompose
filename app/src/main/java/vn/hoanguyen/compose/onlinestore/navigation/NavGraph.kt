@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import vn.hoanguyen.compose.onlinestore.features.EmptyScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.ForgotPasswordScreen
 import vn.hoanguyen.compose.onlinestore.features.auth.LoginScreen
@@ -19,11 +21,12 @@ import vn.hoanguyen.compose.onlinestore.features.main.cart.CartScreen
 import vn.hoanguyen.compose.onlinestore.features.main.checkout.CheckoutScreen
 import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedScreen
+import vn.hoanguyen.compose.onlinestore.features.product.ProductDetailsScreen
 import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, navBottomBarController: NavHostController) {
     NavHost(
         navController = navController, startDestination = NavRoute.Main.path
     ) {
@@ -32,7 +35,7 @@ fun NavGraph(navController: NavHostController) {
         addLoginScreen(navController)
         addRegisterScreen(navController)
         addForgotPasswordScreen(navController)
-        addMainScreen(navController)
+        addMainScreen(navController, navBottomBarController)
         addOTPScreen(navController)
         addResetPassScreen(navController)
         addCheckoutScreen(navController)
@@ -44,18 +47,20 @@ fun NavGraph(navController: NavHostController) {
         addNotificationsScreen(navController)
         addFAQSScreen(navController)
         addHelpCenterScreen(navController)
+
+        addProductDetailsScreen(navController, navBottomBarController)
     }
 }
 
 @Composable
 fun NavBottomBarGraph(
+    navMainController: NavHostController,
     navBottomBarController: NavHostController,
-    navMainController: NavHostController
 ) {
     NavHost(
         navController = navBottomBarController, startDestination = NavRoute.Home.path
     ) {
-        addBottomBarScreen(navMainController)
+        addBottomBarScreen(navMainController, navBottomBarController)
     }
 }
 
@@ -73,13 +78,11 @@ private fun NavGraphBuilder.addSplashScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.Splash.path) {
-        SplashScreen(
-            onNavigateWelcome = {
-                navController.navigate(NavRoute.Welcome.path) { clear(NavRoute.Splash.path) }
-            },
-            onNavigateMain = {
-                navController.navigate(NavRoute.Main.path) { clearMain(NavRoute.Splash.path) }
-            })
+        SplashScreen(onNavigateWelcome = {
+            navController.navigate(NavRoute.Welcome.path) { clear(NavRoute.Splash.path) }
+        }, onNavigateMain = {
+            navController.navigate(NavRoute.Main.path) { clearMain(NavRoute.Splash.path) }
+        })
     }
 }
 
@@ -136,39 +139,45 @@ private fun NavGraphBuilder.addRegisterScreen(
 
 private fun NavGraphBuilder.addMainScreen(
     navController: NavHostController,
+    navBottomBarController: NavHostController
 ) {
     composable(route = NavRoute.Main.path) {
-        MainScreen(navController)
+        MainScreen(navController, navBottomBarController)
     }
 }
 
 private fun NavGraphBuilder.addBottomBarScreen(
     navMainController: NavHostController,
+    navBottomBarController: NavHostController,
 ) {
     composable(route = NavRoute.Home.path) {
-        HomeScreen()
+        HomeScreen(onNavigateProductDetails = { productId ->
+            navMainController.navigate(NavRoute.ProductDetails.withArgs(productId))
+        })
     }
     composable(route = NavRoute.Search.path) {
         EmptyScreen("Search")
     }
     composable(route = NavRoute.Saved.path) {
-        SavedScreen()
+        SavedScreen(onNavigateProductDetails = { productId ->
+            navMainController.navigate(NavRoute.ProductDetails.withArgs(productId))
+        })
     }
     composable(route = NavRoute.Cart.path) {
         CartScreen(
             onNavigateToCheckout = {
                 navMainController.navigate(NavRoute.Checkout.path)
-            }
-        )
+            },
+            onNavigateProductDetails = { productId ->
+                navMainController.navigate(NavRoute.ProductDetails.withArgs(productId))
+            })
     }
     composable(route = NavRoute.Account.path) {
-        AccountScreen(
-            onNavigateMenu = { path -> navMainController.navigate(path) },
-            onLogout = {
-                navMainController.navigate(NavRoute.Login.path) {
-                    clear(NavRoute.Main.path)
-                }
-            })
+        AccountScreen(onNavigateMenu = { path -> navMainController.navigate(path) }, onLogout = {
+            navMainController.navigate(NavRoute.Login.path) {
+                clear(NavRoute.Main.path)
+            }
+        })
     }
 }
 
@@ -176,14 +185,11 @@ private fun NavGraphBuilder.addForgotPasswordScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.ForgotPassword.path) {
-        ForgotPasswordScreen(
-            onNavigationBack = {
-                navController.popBackStack()
-            },
-            onNavigateInputCode = {
-                navController.navigate(NavRoute.OTP.path)
-            }
-        )
+        ForgotPasswordScreen(onNavigationBack = {
+            navController.popBackStack()
+        }, onNavigateInputCode = {
+            navController.navigate(NavRoute.OTP.path)
+        })
     }
 }
 
@@ -191,17 +197,14 @@ private fun NavGraphBuilder.addOTPScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.OTP.path) {
-        OTPScreen(
-            email = "example@emial.com", //TODO
+        OTPScreen(email = "example@emial.com", //TODO
             onNavigationBack = {
                 navController.popBackStack()
-            },
-            onOTPEntered = { otp ->
+            }, onOTPEntered = { otp ->
                 if (otp.length > 3) {
                     navController.navigate(NavRoute.ResetPassword.path)
                 }
-            }
-        )
+            })
     }
 }
 
@@ -209,14 +212,11 @@ private fun NavGraphBuilder.addResetPassScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.ResetPassword.path) {
-        ResetPasswordScreen(
-            onNavigationBack = {
-                navController.popBackStack()
-            },
-            onNavigationToLogin = {
-                navController.navigate(NavRoute.Login.path) { clear(NavRoute.Login.path) }
-            }
-        )
+        ResetPasswordScreen(onNavigationBack = {
+            navController.popBackStack()
+        }, onNavigationToLogin = {
+            navController.navigate(NavRoute.Login.path) { clear(NavRoute.Login.path) }
+        })
     }
 }
 
@@ -297,5 +297,25 @@ private fun NavGraphBuilder.addHelpCenterScreen(
         EmptyScreen("Help Center") {
             navController.popBackStack()
         }
+    }
+}
+
+private fun NavGraphBuilder.addProductDetailsScreen(
+    navController: NavHostController,
+    navBottomBarController: NavHostController,
+) {
+    composable(
+        route = NavRoute.ProductDetails.withArgsFormat(NavRoute.ProductDetails.productId),
+        arguments = listOf(
+            navArgument(NavRoute.ProductDetails.productId) { type = NavType.StringType },
+        )
+    ) { backStackEntry ->
+        ProductDetailsScreen(productId = backStackEntry.arguments?.getString(NavRoute.ProductDetails.productId)
+            .orEmpty(),
+            onBack = { navController.popBackStack() },
+            onNavigateToCart = { cartItem -> // no need to pass in new cart, just simulate random list
+                navController.popBackStack()
+                navBottomBarController.navigate(NavRoute.Cart.path)
+            })
     }
 }

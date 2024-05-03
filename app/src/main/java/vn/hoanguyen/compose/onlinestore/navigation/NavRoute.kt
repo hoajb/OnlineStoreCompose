@@ -9,7 +9,6 @@ private object Path {
     const val RESET_PASSWORD = "Reset_password"
     const val OTP = "otp"
     const val MAIN = "main"
-    const val PROFILE = "profile"
     const val HOME = "home"
     const val SEARCH = "search"
     const val SAVED = "saved"
@@ -24,6 +23,8 @@ private object Path {
     const val NOTIFICATION = "notification"
     const val FAQS = "faqs"
     const val HELP_CENTER = "help_center"
+
+    const val PRODUCT_DETAILS = "product_details"
 }
 
 sealed class NavRoute(val path: String) {
@@ -51,9 +52,8 @@ sealed class NavRoute(val path: String) {
     data object HelpCenter : NavRoute(Path.HELP_CENTER)
 
 
-    data object Profile : NavRoute(Path.PROFILE) {
-        val id = "id"
-        val showDetails = "showDetails"
+    data object ProductDetails : NavRoute(Path.PRODUCT_DETAILS) {
+        val productId = "productId"
     }
 
     // build navigation path (for screen navigation)

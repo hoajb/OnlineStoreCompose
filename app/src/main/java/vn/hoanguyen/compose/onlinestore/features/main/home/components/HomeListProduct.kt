@@ -49,7 +49,8 @@ fun HomeListProduct(
     listProduct: List<Product>,
     defaultFavorite: Boolean = false, // useful for Saved Items Page
     emptyItem: @Composable () -> Unit = {},
-    onFavoritePressed: (Product) -> Unit
+    onFavoritePressed: (Product) -> Unit,
+    onItemPressed: (String) -> Unit
 ) {
     if (listProduct.isEmpty()) {
         Box(
@@ -72,7 +73,8 @@ fun HomeListProduct(
                     ProductItem(
                         product = product,
                         defaultFavorite = defaultFavorite,
-                        onFavoritePressed = onFavoritePressed
+                        onFavoritePressed = onFavoritePressed,
+                        onItemPressed = onItemPressed
                     )
                 }
             }
@@ -84,12 +86,15 @@ fun HomeListProduct(
 fun ProductItem(
     product: Product,
     defaultFavorite: Boolean = false,
-    onFavoritePressed: (Product) -> Unit
+    onFavoritePressed: (Product) -> Unit,
+    onItemPressed: (String) -> Unit
 ) {
     var isFavoriteState by remember {
         mutableStateOf(defaultFavorite)
     }
-    Column {
+    Column(Modifier.clickable {
+        onItemPressed.invoke(product.id)
+    }) {
         Box(
             Modifier
                 .aspectRatio(1f)
@@ -121,8 +126,7 @@ fun ProductItem(
                     .padding(4.dp),
             ) {
                 Icon(
-                    imageVector = if (isFavoriteState)
-                        Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder,
+                    imageVector = if (isFavoriteState) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder,
                     tint = if (isFavoriteState) ColorRed else Color.Black,
                     contentDescription = "Favorite"
                 )
@@ -137,8 +141,7 @@ fun ProductItem(
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            product.price.formatAsCurrency(),
-            style = AppTypography.bodyMedium.copy(
+            product.price.formatAsCurrency(), style = AppTypography.bodyMedium.copy(
                 color = Color.Gray
             )
         )
@@ -149,8 +152,7 @@ fun ProductItem(
 @Composable
 private fun HomeListProductPrev() {
     OnlineStoreComposeTheme {
-        HomeListProduct(listProduct =
-        (0..10).map {
+        HomeListProduct(listProduct = (0..10).map {
             Product(
                 name = "Regular Fit Black No.$it",
                 discount = 10,
@@ -158,10 +160,12 @@ private fun HomeListProductPrev() {
                 id = it.toString(),
                 description = "No",
                 imageUrl = "https://static.pullandbear.net/2/photos//2024/V/0/2/p/3241/570/711/3241570711_2_1_8.jpg?t=1713773719598&imwidth=1125",
-                category = "TShirt"
+                category = "TShirt",
+                sizeList = listOf("S","M","L")
             )
-        }
-        ) {}
+        },
+            onItemPressed = {},
+            onFavoritePressed = {})
     }
 }
 
@@ -169,10 +173,10 @@ private fun HomeListProductPrev() {
 @Composable
 private fun HomeListProductEmptyPrev() {
     OnlineStoreComposeTheme {
-        HomeListProduct(
-            listProduct = emptyList(),
-            emptyItem = { SavedProductListEmptyItem() }
-        ) {}
+        HomeListProduct(listProduct = emptyList(),
+            emptyItem = { SavedProductListEmptyItem() },
+            onItemPressed = {},
+            onFavoritePressed = {})
     }
 }
 
