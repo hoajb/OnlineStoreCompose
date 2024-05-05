@@ -224,9 +224,15 @@ private fun NavGraphBuilder.addCheckoutScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.Checkout.path) {
-        CheckoutScreen() {
-            navController.popBackStack()
-        }
+        CheckoutScreen(
+            onBack = { navController.popBackStack() },
+            onNavigateToChangePaymentMethod = {
+                //TODO
+            },
+            onNavigateToChangeAddress = {
+                //TODO
+            }
+        )
     }
 }
 
