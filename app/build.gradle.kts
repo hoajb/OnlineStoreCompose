@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlinKapt)
     alias(libs.plugins.daggerHiltAndroid)
+    alias(libs.plugins.secretsGradle)
 }
 
 android {
@@ -61,6 +62,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,9 +71,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation(libs.kotlin.coroutines.play)
     implementation(libs.gson)
     implementation(libs.coil)
     implementation("com.canopas.compose-animated-navigationbar:bottombar:1.0.1")
+    implementation("com.google.maps.android:maps-compose:4.4.2")
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
 
     //UI
     implementation(libs.androidx.compose.material.iconsExtended)
@@ -83,4 +88,12 @@ dependencies {
     //Navigation
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.hilt.navigation.compose)
+}
+
+secrets {
+    // To add your Maps API key to this project:
+    // 1. Add this line to your local.properties file, where YOUR_API_KEY is your API key:
+    //        MAPS_API_KEY=YOUR_API_KEY
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.properties"
 }

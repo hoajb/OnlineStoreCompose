@@ -14,6 +14,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.CreditCard
 import androidx.compose.material.icons.outlined.Money
 import androidx.compose.material3.Button
@@ -24,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import vn.hoanguyen.compose.onlinestore.components.AppDivider
 import vn.hoanguyen.compose.onlinestore.components.AppTopAppBar
+import vn.hoanguyen.compose.onlinestore.components.dialog.AppDialog
 import vn.hoanguyen.compose.onlinestore.data_providers.Address
 import vn.hoanguyen.compose.onlinestore.data_providers.CardInfo
 import vn.hoanguyen.compose.onlinestore.features.main.checkout.components.DeliveryAddress
@@ -48,8 +53,8 @@ fun CheckoutScreen(
     onBack: () -> Unit = {},
     onNavigateToChangeAddress: () -> Unit,
     onNavigateToChangePaymentMethod: () -> Unit,
-
-    ) {
+    onNavigateToTrackOrders: () -> Unit,
+) {
     LaunchedEffect(Unit) {
         viewmodel.loadDefaultAddress()
         viewmodel.loadDefaultCard()
@@ -65,6 +70,7 @@ fun CheckoutScreen(
         onBack = onBack,
         onNavigateToChangeAddress = onNavigateToChangeAddress,
         onNavigateToChangePaymentMethod = onNavigateToChangePaymentMethod,
+        onNavigateToTrackOrders = onNavigateToTrackOrders
     )
 }
 
@@ -76,7 +82,9 @@ fun CheckoutBody(
     onBack: () -> Unit = {},
     onNavigateToChangeAddress: () -> Unit,
     onNavigateToChangePaymentMethod: () -> Unit,
+    onNavigateToTrackOrders: () -> Unit,
 ) {
+    val showSuccessOrder = remember { mutableStateOf(false) }
     Scaffold(
         Modifier.background(Color.White),
         topBar = {
@@ -135,10 +143,26 @@ fun CheckoutBody(
                 ),
                 shape = RoundedCornerShape(12.dp),
                 onClick = {
-                    //TODO
+                    showSuccessOrder.value = true
                 }) {
                 Text(text = "Place Order")
             }
+        }
+    }
+
+    when {
+        showSuccessOrder.value -> {
+            AppDialog(
+                onDismissRequest = { showSuccessOrder.value = false },
+                onPositivePressed = {
+                    onNavigateToTrackOrders.invoke()
+                },
+                title = "Congratulation!",
+                content = "Your order has been placed.",
+                positive = "Track Your Order",
+                icon = Icons.Default.CheckCircle,
+                iconTint = Color.Green
+            )
         }
     }
 }
@@ -163,7 +187,8 @@ private fun CheckoutScreenPrev() {
             ),
             onBack = {},
             onNavigateToChangeAddress = {},
-            onNavigateToChangePaymentMethod = {}
+            onNavigateToChangePaymentMethod = {},
+            onNavigateToTrackOrders = {}
         )
     }
 }

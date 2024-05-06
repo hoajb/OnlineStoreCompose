@@ -32,7 +32,7 @@ private fun MainPage() {
         ) {
             val navController = rememberNavController()
             val navBottomBarController = rememberNavController()
-            NavGraph(navController = navController, navBottomBarController =navBottomBarController)
+            NavGraph(navController = navController, navBottomBarController = navBottomBarController)
         }
     }
 }

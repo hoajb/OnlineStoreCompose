@@ -24,7 +24,6 @@ import androidx.compose.material.icons.outlined.Facebook
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -82,10 +81,10 @@ fun LoginScreen(
 
     when {
         error.value != "" -> {
-            AppDialog(onDismissRequest = { error.value = "" }, onConfirmation = {
+            AppDialog(onDismissRequest = { error.value = "" }, onPositivePressed = {
                 error.value = ""
                 println("Confirmation registered")
-            }, dialogTitle = "Error", dialogText = error.value, icon = Icons.Default.Error
+            }, title = "Error", content = error.value, icon = Icons.Default.Error
             )
         }
     }

@@ -21,6 +21,8 @@ import vn.hoanguyen.compose.onlinestore.features.main.cart.CartScreen
 import vn.hoanguyen.compose.onlinestore.features.main.checkout.CheckoutScreen
 import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedScreen
+import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressAddNewScreen
+import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressManagementScreen
 import vn.hoanguyen.compose.onlinestore.features.product.ProductDetailsScreen
 import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 
@@ -43,6 +45,7 @@ fun NavGraph(navController: NavHostController, navBottomBarController: NavHostCo
         addMyOrdersScreen(navController)
         addMyDetailsScreen(navController)
         addAddressBookScreen(navController)
+        addAddressAddNewScreen(navController)
         addPaymentMethodScreen(navController)
         addNotificationsScreen(navController)
         addFAQSScreen(navController)
@@ -138,8 +141,7 @@ private fun NavGraphBuilder.addRegisterScreen(
 }
 
 private fun NavGraphBuilder.addMainScreen(
-    navController: NavHostController,
-    navBottomBarController: NavHostController
+    navController: NavHostController, navBottomBarController: NavHostController
 ) {
     composable(route = NavRoute.Main.path) {
         MainScreen(navController, navBottomBarController)
@@ -164,13 +166,11 @@ private fun NavGraphBuilder.addBottomBarScreen(
         })
     }
     composable(route = NavRoute.Cart.path) {
-        CartScreen(
-            onNavigateToCheckout = {
-                navMainController.navigate(NavRoute.Checkout.path)
-            },
-            onNavigateProductDetails = { productId ->
-                navMainController.navigate(NavRoute.ProductDetails.withArgs(productId))
-            })
+        CartScreen(onNavigateToCheckout = {
+            navMainController.navigate(NavRoute.Checkout.path)
+        }, onNavigateProductDetails = { productId ->
+            navMainController.navigate(NavRoute.ProductDetails.withArgs(productId))
+        })
     }
     composable(route = NavRoute.Account.path) {
         AccountScreen(onNavigateMenu = { path -> navMainController.navigate(path) }, onLogout = {
@@ -224,15 +224,16 @@ private fun NavGraphBuilder.addCheckoutScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.Checkout.path) {
-        CheckoutScreen(
-            onBack = { navController.popBackStack() },
+        CheckoutScreen(onBack = { navController.popBackStack() },
             onNavigateToChangePaymentMethod = {
                 //TODO
             },
             onNavigateToChangeAddress = {
+                navController.navigate(NavRoute.AddressBook.path)
+            },
+            onNavigateToTrackOrders = {
                 //TODO
-            }
-        )
+            })
     }
 }
 
@@ -260,11 +261,29 @@ private fun NavGraphBuilder.addAddressBookScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.AddressBook.path) {
-        EmptyScreen("Address Book") {
+        AddressManagementScreen(onBack = {
             navController.popBackStack()
-        }
+        },
+
+            onAddNewAddress = {
+                navController.navigate(NavRoute.AddressAddNew.path)
+            })
     }
 }
+
+
+private fun NavGraphBuilder.addAddressAddNewScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.AddressAddNew.path) {
+        AddressAddNewScreen(
+            onBack = {
+                navController.popBackStack()
+            },
+        )
+    }
+}
+
 
 private fun NavGraphBuilder.addPaymentMethodScreen(
     navController: NavHostController,

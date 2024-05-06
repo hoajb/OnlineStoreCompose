@@ -19,6 +19,7 @@ private object Path {
     const val MY_ORDERS = "my_orders"
     const val MY_DETAILS = "my_details"
     const val ADDRESS_BOOK = "address_book"
+    const val ADDRESS_ADD = "address_add"
     const val PAYMENT_METHODS = "payment_methods"
     const val NOTIFICATION = "notification"
     const val FAQS = "faqs"
@@ -46,6 +47,7 @@ sealed class NavRoute(val path: String) {
     data object MyOrders : NavRoute(Path.MY_ORDERS)
     data object MyDetails : NavRoute(Path.MY_DETAILS)
     data object AddressBook : NavRoute(Path.ADDRESS_BOOK)
+    data object AddressAddNew : NavRoute(Path.ADDRESS_ADD)
     data object PaymentMethods : NavRoute(Path.PAYMENT_METHODS)
     data object Notification : NavRoute(Path.NOTIFICATION)
     data object FAQS : NavRoute(Path.FAQS)
