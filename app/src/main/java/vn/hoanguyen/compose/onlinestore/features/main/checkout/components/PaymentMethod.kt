@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CreditCard
-import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.ModeEdit
 import androidx.compose.material.icons.outlined.Money
 import androidx.compose.material3.Icon
@@ -28,10 +27,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import vn.hoanguyen.compose.onlinestore.R
 import vn.hoanguyen.compose.onlinestore.data_providers.CardInfo
 import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 import vn.hoanguyen.compose.onlinestore.ui.theme.OnlineStoreComposeTheme
+import vn.hoanguyen.compose.onlinestore.utils.toCardIcon
 
 @Composable
 fun PaymentMethod(
@@ -67,7 +66,7 @@ fun PaymentMethod(
         ) {
             Image(
                 modifier = Modifier.size(40.dp),
-                painter = painterResource(id = R.drawable.logo_visa),
+                painter = painterResource(id = payment.name.toCardIcon()),
                 contentDescription = "card type"
             )
 

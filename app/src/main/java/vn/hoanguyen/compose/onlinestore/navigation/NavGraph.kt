@@ -23,6 +23,8 @@ import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressAddNewScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressManagementScreen
+import vn.hoanguyen.compose.onlinestore.features.manament.payment.AddNewCardScreen
+import vn.hoanguyen.compose.onlinestore.features.manament.payment.PaymentManagementScreen
 import vn.hoanguyen.compose.onlinestore.features.product.ProductDetailsScreen
 import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 
@@ -47,6 +49,7 @@ fun NavGraph(navController: NavHostController, navBottomBarController: NavHostCo
         addAddressBookScreen(navController)
         addAddressAddNewScreen(navController)
         addPaymentMethodScreen(navController)
+        addCardAddNewScreen(navController)
         addNotificationsScreen(navController)
         addFAQSScreen(navController)
         addHelpCenterScreen(navController)
@@ -263,11 +266,9 @@ private fun NavGraphBuilder.addAddressBookScreen(
     composable(route = NavRoute.AddressBook.path) {
         AddressManagementScreen(onBack = {
             navController.popBackStack()
-        },
-
-            onAddNewAddress = {
-                navController.navigate(NavRoute.AddressAddNew.path)
-            })
+        }, onAddNewAddress = {
+            navController.navigate(NavRoute.AddressAddNew.path)
+        })
     }
 }
 
@@ -284,14 +285,27 @@ private fun NavGraphBuilder.addAddressAddNewScreen(
     }
 }
 
-
 private fun NavGraphBuilder.addPaymentMethodScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.PaymentMethods.path) {
-        EmptyScreen("Payment Methods") {
+        PaymentManagementScreen(onBack = {
             navController.popBackStack()
-        }
+        }, onAddNewCard = {
+            navController.navigate(NavRoute.CardAddNew.path)
+        })
+    }
+}
+
+private fun NavGraphBuilder.addCardAddNewScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.CardAddNew.path) {
+        AddNewCardScreen(
+            onBack = {
+                navController.popBackStack()
+            },
+        )
     }
 }
 

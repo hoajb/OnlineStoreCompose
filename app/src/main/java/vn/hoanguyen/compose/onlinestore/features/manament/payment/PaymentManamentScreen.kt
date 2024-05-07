@@ -1,12 +1,12 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package vn.hoanguyen.compose.onlinestore.features.manament.address
+package vn.hoanguyen.compose.onlinestore.features.manament.payment
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,15 +14,13 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,44 +37,47 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import vn.hoanguyen.compose.onlinestore.components.AppTopAppBar
-import vn.hoanguyen.compose.onlinestore.data_providers.Address
+import vn.hoanguyen.compose.onlinestore.data_providers.CardInfo
 import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 import vn.hoanguyen.compose.onlinestore.ui.theme.OnlineStoreComposeTheme
+import vn.hoanguyen.compose.onlinestore.utils.toCardIcon
 
 @Composable
-fun AddressManagementScreen(
-    viewmodel: AddressManagementViewmodel = hiltViewModel(),
+fun PaymentManagementScreen(
+    viewmodel: PaymentManagementViewmodel = hiltViewModel(),
     onBack: () -> Unit,
-    onAddNewAddress: () -> Unit,
+    onAddNewCard: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        viewmodel.loadDefaultAddress()
+        viewmodel.loadDefaultPayment()
     }
-    val addressList = viewmodel.addressList.collectAsState()
+    val cardList = viewmodel.cardList.collectAsState()
     val (defaultPos, updateDefaultPos) = remember { mutableIntStateOf(0) }
-    AddressManagementBody(
+    PaymentManagementBody(
         onBack = onBack,
-        list = addressList.value,
+        list = cardList.value,
         defaultPos = defaultPos,
         onUpdateDefaultPos = updateDefaultPos,
-        onAddNewAddress = onAddNewAddress
+        onAddNewCard = onAddNewCard
     )
 }
 
 @Composable
-fun AddressManagementBody(
+fun PaymentManagementBody(
     onBack: () -> Unit = {},
-    onAddNewAddress: () -> Unit,
-    list: List<Address>,
+    onAddNewCard: () -> Unit,
+    list: List<CardInfo>,
     defaultPos: Int = 0,
     onUpdateDefaultPos: (Int) -> Unit
 ) {
     Scaffold(Modifier.background(Color.White), topBar = {
-        AppTopAppBar(title = "Address", onBack = onBack)
+        AppTopAppBar(title = "Payment Method", onBack = onBack)
     }) { padding ->
         Column(
             Modifier
@@ -86,60 +87,60 @@ fun AddressManagementBody(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Saved Address", style = AppTypography.titleMedium
+                text = "Saved Cards", style = AppTypography.titleMedium
             )
             LazyColumn(
                 Modifier
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-                itemsIndexed(list) { index, address ->
+                itemsIndexed(list) { index, cardInfo ->
                     Row(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .padding(vertical = 8.dp)
                             .border(
                                 width = 0.5.dp,
                                 color = Color.LightGray,
                                 shape = RoundedCornerShape(12.dp)
                             )
-                            .padding(8.dp), verticalAlignment = Alignment.CenterVertically
+                            .padding(vertical = 8.dp, horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            imageVector = Icons.Outlined.LocationOn,
-                            contentDescription = "LocationOn",
-                            tint = Color.Gray
+
+                        Image(
+                            modifier = Modifier.size(40.dp),
+                            painter = painterResource(id = cardInfo.name.toCardIcon()),
+                            contentDescription = "card type"
                         )
+
                         Spacer(modifier = Modifier.width(8.dp))
-                        Column(
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Row(
-                            ) {
-                                Text(
-                                    text = address.name,
-                                    style = AppTypography.titleSmall,
-                                    maxLines = 2
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                if (defaultPos == index)
-                                    Text(
-                                        modifier = Modifier
-                                            .padding(horizontal = 8.dp)
-                                            .wrapContentSize(unbounded = true)
-                                            .background(
-                                                color = Color.LightGray,
-                                                shape = RoundedCornerShape(6.dp)
-                                            )
-                                            .padding(horizontal = 4.dp, vertical = 2.dp),
-                                        text = "default",
-                                        style = AppTypography.bodySmall,
-                                    )
-                            }
+
+                        Text(
+                            "**** **** **** ",
+                            style = AppTypography.bodyMedium.copy(fontWeight = FontWeight.W500)
+                        )
+
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = cardInfo.number.substring(
+                                cardInfo.number.length - 4,
+                                cardInfo.number.length
+                            ),
+                            style = AppTypography.bodyMedium.copy(fontWeight = FontWeight.W500)
+                        )
+                        if (defaultPos == index)
                             Text(
-                                text = address.address,
-                                style = AppTypography.bodyMedium.copy(color = Color.Gray)
+                                modifier = Modifier
+                                    .background(
+                                        color = Color.LightGray,
+                                        shape = RoundedCornerShape(6.dp)
+                                    )
+                                    .padding(horizontal = 4.dp, vertical = 2.dp),
+                                text = "default",
+                                style = AppTypography.bodySmall
                             )
-                        }
+
                         Spacer(modifier = Modifier.width(8.dp))
                         RadioButton(
                             selected = defaultPos == index,
@@ -167,14 +168,14 @@ fun AddressManagementBody(
                                 shape = RoundedCornerShape(12.dp)
                             )
                             .clickable {
-                                onAddNewAddress.invoke()
+                                onAddNewCard.invoke()
                             },
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "add")
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Add New Address")
+                        Text(text = "Add New Card")
                     }
                 }
 
@@ -200,38 +201,13 @@ fun AddressManagementBody(
 
 @Preview
 @Composable
-private fun AddressManagementScreenPrev() {
+private fun PaymentManagementScreenPrev() {
     OnlineStoreComposeTheme {
-        AddressManagementBody(list = (0..5).map { index ->
-            if (index == 2) {
-                Address(
-                    name = "Home $index Home $index Home $index Home $index $index Home $index Home $index",
-                    address = "12 Le Loi Street, Hue City, Vietnam, Postal Code: 530000"
-                )
-            } else
-                Address(
-                    name = "Home $index",
-                    address = "12 Le Loi Street, Hue City, Vietnam, Postal Code: 530000"
-                )
-        }, onBack = {}, defaultPos = 2, onUpdateDefaultPos = {}, onAddNewAddress = {})
-    }
-}
-
-@Preview
-@Composable
-private fun AddressManagementScreen2Prev() {
-    OnlineStoreComposeTheme {
-        AddressManagementBody(list = (0..1).map { index ->
-            if (index == 2) {
-                Address(
-                    name = "Home $index Home $index Home $index Home $index $index Home $index Home $index",
-                    address = "12 Le Loi Street, Hue City, Vietnam, Postal Code: 530000"
-                )
-            } else
-                Address(
-                    name = "Home $index",
-                    address = "12 Le Loi Street, Hue City, Vietnam, Postal Code: 530000"
-                )
-        }, onBack = {}, defaultPos = 1, onUpdateDefaultPos = {}, onAddNewAddress = {})
+        PaymentManagementBody(list = (0..5).map { index ->
+            CardInfo(
+                name = "American Express",
+                number = "1234567890"
+            )
+        }, onBack = {}, defaultPos = 2, onUpdateDefaultPos = {}, onAddNewCard = {})
     }
 }
