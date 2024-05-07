@@ -5,3 +5,8 @@ data class CartProduct(
     val size: String,
     val quantity: Int
 )
+
+data class OrderProduct(
+    val cartProduct: CartProduct,
+    val status: String
+)

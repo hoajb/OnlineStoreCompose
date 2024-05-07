@@ -23,6 +23,7 @@ import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressAddNewScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressManagementScreen
+import vn.hoanguyen.compose.onlinestore.features.manament.order.MyOrdersScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.AddNewCardScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.PaymentManagementScreen
 import vn.hoanguyen.compose.onlinestore.features.product.ProductDetailsScreen
@@ -244,9 +245,9 @@ private fun NavGraphBuilder.addMyOrdersScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.MyOrders.path) {
-        EmptyScreen("My Orders") {
+        MyOrdersScreen(onBack = {
             navController.popBackStack()
-        }
+        })
     }
 }
 

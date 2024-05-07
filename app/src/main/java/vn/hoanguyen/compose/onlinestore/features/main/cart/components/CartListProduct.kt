@@ -146,7 +146,7 @@ fun CartItem(
     Row(
         Modifier
             .fillMaxWidth()
-            .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(12.dp))
+            .border(width = 0.5.dp, color = Color.LightGray, shape = RoundedCornerShape(12.dp))
             .background(color = Color.White)
             .padding(16.dp)
             .clickable {
