@@ -74,9 +74,11 @@ dependencies {
     implementation(libs.kotlin.coroutines.play)
     implementation(libs.gson)
     implementation(libs.coil)
+    implementation(libs.kotlinx.immutable)
     implementation("com.canopas.compose-animated-navigationbar:bottombar:1.0.1")
     implementation("com.google.maps.android:maps-compose:4.4.2")
     implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+    implementation(libs.libphonenumber)
 
     //UI
     implementation(libs.androidx.compose.material.iconsExtended)

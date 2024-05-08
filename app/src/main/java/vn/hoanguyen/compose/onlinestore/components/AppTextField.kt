@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 
-private val ErrorColor = Color.Red
+val ErrorColor = Color.Red
 
 @Composable
 fun AppTextField(

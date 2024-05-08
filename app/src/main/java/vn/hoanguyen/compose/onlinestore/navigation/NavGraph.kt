@@ -23,6 +23,7 @@ import vn.hoanguyen.compose.onlinestore.features.main.home.HomeScreen
 import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressAddNewScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressManagementScreen
+import vn.hoanguyen.compose.onlinestore.features.manament.my_details.MyDetailsScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.order.MyOrdersScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.AddNewCardScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.PaymentManagementScreen
@@ -230,13 +231,13 @@ private fun NavGraphBuilder.addCheckoutScreen(
     composable(route = NavRoute.Checkout.path) {
         CheckoutScreen(onBack = { navController.popBackStack() },
             onNavigateToChangePaymentMethod = {
-                //TODO
+                navController.navigate(NavRoute.PaymentMethods.path)
             },
             onNavigateToChangeAddress = {
                 navController.navigate(NavRoute.AddressBook.path)
             },
             onNavigateToTrackOrders = {
-                //TODO
+                navController.navigate(NavRoute.MyOrders.path)
             })
     }
 }
@@ -255,9 +256,9 @@ private fun NavGraphBuilder.addMyDetailsScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.MyDetails.path) {
-        EmptyScreen("My Details") {
+        MyDetailsScreen(onBack = {
             navController.popBackStack()
-        }
+        })
     }
 }
 
