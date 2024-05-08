@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
@@ -58,7 +59,7 @@ fun MyOrdersScreen(
                     scope.launch { pagerState.animateScrollToPage(index) }
                 }
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             HorizontalPager(state = pagerState) { page ->
                 // Our page content
                 when (page) {
@@ -69,9 +70,6 @@ fun MyOrdersScreen(
 
                     1 -> OrderCompleted(
                         listOrders = listCompletedOrders,
-                        onNavigateToTrackOrder = {
-                            //TODO
-                        }
                     )
                 }
             }

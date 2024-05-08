@@ -52,10 +52,11 @@ fun AppTextField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     Column(modifier = modifier) {
-        Text(
-            label, modifier = Modifier.padding(bottom = 8.dp),
-            style = AppTypography.bodyMedium
-        )
+        if (label.isNotEmpty())
+            Text(
+                label, modifier = Modifier.padding(bottom = 8.dp),
+                style = AppTypography.bodyMedium
+            )
 
         OutlinedTextField(
             colors = TextFieldDefaults.colors(
@@ -133,10 +134,11 @@ fun AppTextField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     Column(modifier = modifier) {
-        Text(
-            label, modifier = Modifier.padding(bottom = 8.dp),
-            style = AppTypography.bodyMedium
-        )
+        if (label.isNotEmpty())
+            Text(
+                label, modifier = Modifier.padding(bottom = 8.dp),
+                style = AppTypography.bodyMedium
+            )
 
         OutlinedTextField(
             colors = TextFieldDefaults.colors(
