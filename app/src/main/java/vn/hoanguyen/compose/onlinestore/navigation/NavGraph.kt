@@ -24,6 +24,7 @@ import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressAddNewScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressManagementScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.my_details.MyDetailsScreen
+import vn.hoanguyen.compose.onlinestore.features.manament.notification.NotificationSettingScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.order.MyOrdersScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.AddNewCardScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.PaymentManagementScreen
@@ -314,10 +315,10 @@ private fun NavGraphBuilder.addCardAddNewScreen(
 private fun NavGraphBuilder.addNotificationsScreen(
     navController: NavHostController,
 ) {
-    composable(route = NavRoute.Notification.path) {
-        EmptyScreen("Notifications") {
+    composable(route = NavRoute.NotificationSetting.path) {
+        NotificationSettingScreen(onBack = {
             navController.popBackStack()
-        }
+        })
     }
 }
 

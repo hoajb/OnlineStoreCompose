@@ -96,7 +96,7 @@ fun AccountScreen(
                 title = "Notifications",
                 onNavigate = {
                     onNavigateMenu.invoke(
-                        NavRoute.PaymentMethods.path
+                        NavRoute.NotificationSetting.path
                     )
                 })
             BlockDivider()
