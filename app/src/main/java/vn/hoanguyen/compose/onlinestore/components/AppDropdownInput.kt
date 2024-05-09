@@ -81,22 +81,22 @@ fun AppDropdownInput(
                 tint = Color.Gray
             )
         }
-    }
 
-    DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = { expanded = false },
-        modifier = modifier
-            .background(color = Color.White)
-            .fillMaxWidth()
-            .padding(top = 8.dp, start = 16.dp, end = 16.dp)
-    ) {
-        listItems.forEach { item ->
-            DropdownMenuItem(text = { Text(text = item) }, onClick = {
-                selectedItem = item
-                expanded = false
-                onSetValue(item)
-            })
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .background(color = Color.White)
+                .fillMaxWidth()
+                .padding(top = 8.dp, start = 16.dp, end = 16.dp)
+        ) {
+            listItems.forEach { item ->
+                DropdownMenuItem(text = { Text(text = item) }, onClick = {
+                    selectedItem = item
+                    expanded = false
+                    onSetValue(item)
+                })
+            }
         }
     }
 }

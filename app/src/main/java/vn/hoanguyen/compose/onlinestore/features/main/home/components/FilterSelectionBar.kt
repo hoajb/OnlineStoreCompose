@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okhttp3.internal.toImmutableList
 import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 import javax.inject.Inject
 
@@ -105,7 +106,7 @@ fun FilterSelectionBar(
                         .clip(shape = RoundedCornerShape(12.dp))
                         .selectable(selected = selectedIndexList.contains(index), onClick = {
                             viewmodel.select(index, filterChoice)
-                            onSelectedChange.invoke(selectedIndexList)
+                            onSelectedChange.invoke(selectedIndexList.toImmutableList())
                         })
                         .padding(vertical = 8.dp, horizontal = 16.dp)
                 )

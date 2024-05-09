@@ -30,6 +30,7 @@ import vn.hoanguyen.compose.onlinestore.features.manament.order.MyOrdersScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.AddNewCardScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.PaymentManagementScreen
 import vn.hoanguyen.compose.onlinestore.features.product.ProductDetailsScreen
+import vn.hoanguyen.compose.onlinestore.features.service.faq.FAQScreen
 import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 
 
@@ -336,9 +337,9 @@ private fun NavGraphBuilder.addFAQSScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.FAQS.path) {
-        EmptyScreen("FAQs") {
+        FAQScreen(onBack = {
             navController.popBackStack()
-        }
+        })
     }
 }
 

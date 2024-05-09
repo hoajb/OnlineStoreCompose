@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import vn.hoanguyen.compose.onlinestore.components.AppTopAppBar
 
+@Deprecated("Developing purpose")
 @Composable
 fun EmptyScreen(title: String = "", onBack: () -> Unit = {}) {
     Scaffold(
