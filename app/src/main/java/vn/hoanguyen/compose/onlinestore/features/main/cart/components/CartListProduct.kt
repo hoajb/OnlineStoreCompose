@@ -100,7 +100,7 @@ fun TotalItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Sub-total", style = AppTypography.bodyMedium.copy(color = Color.Gray))
-            Text(text = subtotal, style = AppTypography.titleMedium)
+            Text(text = subtotal, style = AppTypography.titleSmall)
         }
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -110,7 +110,7 @@ fun TotalItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "VAT (%)", style = AppTypography.bodyMedium.copy(color = Color.Gray))
-            Text(text = feeVAT, style = AppTypography.titleMedium)
+            Text(text = feeVAT, style = AppTypography.titleSmall)
         }
         Spacer(modifier = Modifier.height(10.dp))
         Row(
@@ -119,7 +119,7 @@ fun TotalItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Shipping fee", style = AppTypography.bodyMedium.copy(color = Color.Gray))
-            Text(text = shippingFee, style = AppTypography.titleMedium)
+            Text(text = shippingFee, style = AppTypography.titleSmall)
         }
         Spacer(modifier = Modifier.height(10.dp))
         AppDivider()
@@ -130,7 +130,7 @@ fun TotalItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Total", style = AppTypography.bodyMedium.copy(color = Color.Gray))
-            Text(text = total, style = AppTypography.titleMedium)
+            Text(text = total, style = AppTypography.titleSmall)
         }
         Spacer(modifier = Modifier.height(10.dp))
     }

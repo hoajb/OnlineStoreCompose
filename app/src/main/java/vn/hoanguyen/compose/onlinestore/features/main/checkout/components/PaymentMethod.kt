@@ -1,5 +1,6 @@
 package vn.hoanguyen.compose.onlinestore.features.main.checkout.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +43,7 @@ fun PaymentMethod(
     listPayments: List<PaymentItem> = emptyList(),
     onChangeCardClick: () -> Unit
 ) {
+    var cardVisibility by rememberSaveable { mutableStateOf(true) }
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -47,44 +53,49 @@ fun PaymentMethod(
             viewmodel = viewModel(),
             listItem = listPayments,
             onSelectedChange = {
-                //nothing
+                cardVisibility = it[0] == 0
             }
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        AnimatedVisibility(visible = cardVisibility) {
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 0.5.dp,
-                    color = Color.LightGray,
-                    shape = RoundedCornerShape(12.dp)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 0.5.dp,
+                        color = Color.LightGray,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .padding(horizontal = 20.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    modifier = Modifier.size(40.dp),
+                    painter = painterResource(id = payment.name.toCardIcon()),
+                    contentDescription = "card type"
                 )
-                .padding(horizontal = 20.dp, vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                modifier = Modifier.size(40.dp),
-                painter = painterResource(id = payment.name.toCardIcon()),
-                contentDescription = "card type"
-            )
 
-            Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
-            Text(
-                "**** **** **** ",
-                style = AppTypography.bodyMedium.copy(fontWeight = FontWeight.W500)
-            )
+                Text(
+                    "**** **** **** ",
+                    style = AppTypography.bodyMedium.copy(fontWeight = FontWeight.W500)
+                )
 
-            Text(
-                modifier = Modifier.weight(1f),
-                text = payment.number.substring(payment.number.length - 4, payment.number.length),
-                style = AppTypography.bodyMedium.copy(fontWeight = FontWeight.W500)
-            )
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = payment.number.substring(
+                        payment.number.length - 4,
+                        payment.number.length
+                    ),
+                    style = AppTypography.bodyMedium.copy(fontWeight = FontWeight.W500)
+                )
 
-            IconButton(onClick = onChangeCardClick) {
-                Icon(imageVector = Icons.Outlined.ModeEdit, contentDescription = "edit")
+                IconButton(onClick = onChangeCardClick) {
+                    Icon(imageVector = Icons.Outlined.ModeEdit, contentDescription = "edit")
+                }
             }
         }
     }
