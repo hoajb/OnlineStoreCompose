@@ -41,12 +41,13 @@ import vn.hoanguyen.compose.onlinestore.ui.theme.OnlineStoreComposeTheme
 @Composable
 fun AccountScreen(
     onNavigateMenu: (path: String) -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onNavigateNotifications: () -> Unit,
 ) {
     Scaffold(
         Modifier.background(Color.White),
         topBar = {
-            HomeAppBar(title = "My Cart", onNavigateNotification = {})
+            HomeAppBar(title = "My Cart", onNavigateNotification = onNavigateNotifications)
         }) { padding ->
         Column(
             Modifier
@@ -161,7 +162,7 @@ fun MenuRow(
         Text(
             modifier = Modifier.weight(1f),
             text = title,
-            style = AppTypography.bodyMedium.copy(color = Color.Gray)
+            style = AppTypography.bodyMedium
         )
         Spacer(Modifier.width(10.dp))
         Icon(
@@ -200,7 +201,7 @@ fun LogoutRow(
 @Composable
 fun AccountScreenPrev() {
     OnlineStoreComposeTheme {
-        AccountScreen(onNavigateMenu = {}, onLogout = {})
+        AccountScreen(onNavigateMenu = {}, onLogout = {}, onNavigateNotifications = {})
     }
 }
 

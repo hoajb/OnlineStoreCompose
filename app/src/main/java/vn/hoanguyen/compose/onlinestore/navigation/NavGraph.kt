@@ -25,6 +25,7 @@ import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressAddNewS
 import vn.hoanguyen.compose.onlinestore.features.manament.address.AddressManagementScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.my_details.MyDetailsScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.notification.NotificationSettingScreen
+import vn.hoanguyen.compose.onlinestore.features.manament.notification.NotificationsScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.order.MyOrdersScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.AddNewCardScreen
 import vn.hoanguyen.compose.onlinestore.features.manament.payment.PaymentManagementScreen
@@ -54,6 +55,7 @@ fun NavGraph(navController: NavHostController, navBottomBarController: NavHostCo
         addPaymentMethodScreen(navController)
         addCardAddNewScreen(navController)
         addNotificationsScreen(navController)
+        addNotificationSettingScreen(navController)
         addFAQSScreen(navController)
         addHelpCenterScreen(navController)
 
@@ -161,6 +163,8 @@ private fun NavGraphBuilder.addBottomBarScreen(
     composable(route = NavRoute.Home.path) {
         HomeScreen(onNavigateProductDetails = { productId ->
             navMainController.navigate(NavRoute.ProductDetails.withArgs(productId))
+        }, onNavigateNotifications = {
+            navMainController.navigate(NavRoute.Notifications.path)
         })
     }
     composable(route = NavRoute.Search.path) {
@@ -169,6 +173,8 @@ private fun NavGraphBuilder.addBottomBarScreen(
     composable(route = NavRoute.Saved.path) {
         SavedScreen(onNavigateProductDetails = { productId ->
             navMainController.navigate(NavRoute.ProductDetails.withArgs(productId))
+        }, onNavigateNotifications = {
+            navMainController.navigate(NavRoute.Notifications.path)
         })
     }
     composable(route = NavRoute.Cart.path) {
@@ -176,6 +182,8 @@ private fun NavGraphBuilder.addBottomBarScreen(
             navMainController.navigate(NavRoute.Checkout.path)
         }, onNavigateProductDetails = { productId ->
             navMainController.navigate(NavRoute.ProductDetails.withArgs(productId))
+        }, onNavigateNotifications = {
+            navMainController.navigate(NavRoute.Notifications.path)
         })
     }
     composable(route = NavRoute.Account.path) {
@@ -183,6 +191,8 @@ private fun NavGraphBuilder.addBottomBarScreen(
             navMainController.navigate(NavRoute.Login.path) {
                 clear(NavRoute.Main.path)
             }
+        }, onNavigateNotifications = {
+            navMainController.navigate(NavRoute.Notifications.path)
         })
     }
 }
@@ -312,7 +322,7 @@ private fun NavGraphBuilder.addCardAddNewScreen(
     }
 }
 
-private fun NavGraphBuilder.addNotificationsScreen(
+private fun NavGraphBuilder.addNotificationSettingScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.NotificationSetting.path) {
@@ -359,5 +369,15 @@ private fun NavGraphBuilder.addProductDetailsScreen(
                 navController.popBackStack()
                 navBottomBarController.navigate(NavRoute.Cart.path)
             })
+    }
+}
+
+private fun NavGraphBuilder.addNotificationsScreen(
+    navController: NavHostController,
+) {
+    composable(route = NavRoute.Notifications.path) {
+        NotificationsScreen(onBack = {
+            navController.popBackStack()
+        })
     }
 }

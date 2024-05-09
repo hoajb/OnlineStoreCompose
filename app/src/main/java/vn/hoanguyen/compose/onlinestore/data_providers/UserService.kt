@@ -33,6 +33,20 @@ class UserService @Inject constructor(
             cardList
         }
     }
+
+    private var notificationsList: List<Notification> = emptyList()
+
+    suspend fun getNotificationsList(): List<Notification> {
+        return withContext(Dispatchers.IO) {
+            if (notificationsList.isEmpty()) {
+                val productsArray =
+                    gson.fromJson(notificationsJson, Array<Notification>::class.java)
+                notificationsList = productsArray.toList()
+            }
+
+            notificationsList
+        }
+    }
 }
 
 private const val cardListJson = "[\n" +
@@ -72,3 +86,37 @@ private const val addressListJson = "[\n" +
         "    \"address\": \"12 Le Loi Street, Hue City, Vietnam, Postal Code: 530000\"\n" +
         "  }\n" +
         "]"
+
+private const val notificationsJson =
+   "[\n" +
+           "  {\n" +
+           "    \"title\": \"30% Special Discount!\",\n" +
+           "    \"content\": \"Special promotion only valid today.\",\n" +
+           "    \"type\": \"0\",\n" +
+           "    \"timestamp\": 1715227585766\n" +
+           "  },\n" +
+           "  {\n" +
+           "    \"title\": \"Top Up E-wallet Successfully!\",\n" +
+           "    \"content\": \"You have top up your e-wallet.\",\n" +
+           "    \"type\": \"1\",\n" +
+           "    \"timestamp\": 1710176400000\n" +
+           "  },\n" +
+           "  {\n" +
+           "    \"title\": \"New Service Available!\",\n" +
+           "    \"content\": \"Now you can track order in real-time.\",\n" +
+           "    \"type\": \"2\",\n" +
+           "    \"timestamp\": 1710187440000\n" +
+           "  },\n" +
+           "  {\n" +
+           "    \"title\": \"Credit Card Connected!\",\n" +
+           "    \"content\": \"Credit card has been linked.\",\n" +
+           "    \"type\": \"3\",\n" +
+           "    \"timestamp\": 1707670800000\n" +
+           "  },\n" +
+           "  {\n" +
+           "    \"title\": \"Account Setup Successfully!\",\n" +
+           "    \"content\": \"Your account has been created.\",\n" +
+           "    \"type\": \"4\",\n" +
+           "    \"timestamp\": 1707717840000\n" +
+           "  }\n" +
+           "]\n"

@@ -3,6 +3,7 @@ package vn.hoanguyen.compose.onlinestore.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -18,11 +19,13 @@ import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 
 @Composable
 fun ListEmptyItem(
+    modifier: Modifier = Modifier,
     icon: ImageVector,
     title: String,
     content: String,
 ) {
     Column(
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

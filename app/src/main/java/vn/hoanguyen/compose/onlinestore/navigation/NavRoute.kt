@@ -23,7 +23,7 @@ private object Path {
     const val PAYMENT_METHODS = "payment_methods"
     const val CARD_ADD = "card_add"
     const val NOTIFICATION_SETTING = "notification_setting"
-    const val NOTIFICATION = "notification"
+    const val NOTIFICATIONS = "notifications"
     const val FAQS = "faqs"
     const val HELP_CENTER = "help_center"
 
@@ -53,7 +53,7 @@ sealed class NavRoute(val path: String) {
     data object PaymentMethods : NavRoute(Path.PAYMENT_METHODS)
     data object CardAddNew : NavRoute(Path.CARD_ADD)
     data object NotificationSetting : NavRoute(Path.NOTIFICATION_SETTING)
-    data object Notification : NavRoute(Path.NOTIFICATION)
+    data object Notifications : NavRoute(Path.NOTIFICATIONS)
     data object FAQS : NavRoute(Path.FAQS)
     data object HelpCenter : NavRoute(Path.HELP_CENTER)
 

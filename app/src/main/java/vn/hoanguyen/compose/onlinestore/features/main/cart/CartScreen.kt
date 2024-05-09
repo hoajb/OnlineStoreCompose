@@ -41,7 +41,8 @@ import vn.hoanguyen.compose.onlinestore.utils.formatAsCurrency
 fun CartScreen(
     viewmodel: CartViewmodel = hiltViewModel(),
     onNavigateToCheckout: () -> Unit,
-    onNavigateProductDetails: (String) -> Unit
+    onNavigateProductDetails: (String) -> Unit,
+    onNavigateNotifications: () -> Unit,
 ) {
     val listProduct = viewmodel.listProduct.collectAsState()
     val subtotal = viewmodel.subTotal.collectAsState()
@@ -64,7 +65,8 @@ fun CartScreen(
             )
         },
         onNavigateToCheckout = onNavigateToCheckout,
-        onNavigateProductDetails = onNavigateProductDetails
+        onNavigateProductDetails = onNavigateProductDetails,
+        onNavigateNotifications = onNavigateNotifications
     )
 
 }
@@ -79,11 +81,12 @@ private fun CartBody(
     onUpdateProductQuantity: (Product, String, Int) -> Unit,
     onDeleteProduct: (Product, String) -> Unit,
     onNavigateToCheckout: () -> Unit,
-    onNavigateProductDetails: (String) -> Unit
+    onNavigateProductDetails: (String) -> Unit,
+    onNavigateNotifications: () -> Unit,
 ) {
     Scaffold(Modifier.background(Color.White),
         topBar = {
-            HomeAppBar(title = "My Cart", onNavigateNotification = {})
+            HomeAppBar(title = "My Cart", onNavigateNotification = onNavigateNotifications)
         }) { padding ->
         Column(
             modifier = Modifier
@@ -169,6 +172,7 @@ private fun HomeScreenPrev() {
         onUpdateProductQuantity = { _, _, _ -> },
         onDeleteProduct = { _, _ -> },
         onNavigateToCheckout = {},
+        onNavigateNotifications = {},
         onNavigateProductDetails = {})
 
 }
@@ -184,5 +188,6 @@ private fun HomeScreenEmptyPrev() {
         onUpdateProductQuantity = { _, _, _ -> },
         onDeleteProduct = { _, _ -> },
         onNavigateToCheckout = {},
+        onNavigateNotifications = {},
         onNavigateProductDetails = {})
 }

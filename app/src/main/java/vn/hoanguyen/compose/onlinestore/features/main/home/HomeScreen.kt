@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.List
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -45,7 +43,8 @@ import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeSearch
 @Composable
 fun HomeScreen(
     viewmodel: HomeViewmodel = hiltViewModel(),
-    onNavigateProductDetails: (String) -> Unit
+    onNavigateProductDetails: (String) -> Unit,
+    onNavigateNotifications: () -> Unit,
 ) {
     val listFilter = viewmodel.listOfFilter.collectAsState()
     val listProduct = viewmodel.listProduct.collectAsState()
@@ -62,7 +61,8 @@ fun HomeScreen(
         onSelectedFilterCategoryChange = { listCategory ->
             viewmodel.loadProductList(listCategory)
         },
-        onNavigateProductDetails = onNavigateProductDetails
+        onNavigateProductDetails = onNavigateProductDetails,
+        onNavigateNotifications = onNavigateNotifications
     )
 }
 
@@ -72,7 +72,8 @@ private fun HomeBody(
     listFilter: List<String>,
     listProduct: List<Product>,
     onSelectedFilterCategoryChange: (List<String>) -> Unit,
-    onNavigateProductDetails: (String) -> Unit
+    onNavigateProductDetails: (String) -> Unit,
+    onNavigateNotifications: () -> Unit,
 ) {
     val configuration = LocalConfiguration.current
     val sheetState = rememberModalBottomSheetState()
@@ -91,9 +92,8 @@ private fun HomeBody(
         ) {
             HomeAppBar(
                 title = "Discover",
-                onNavigateNotification = {
-                    //TODO
-                })
+                onNavigateNotification = onNavigateNotifications
+            )
 
             HomeSearchBar(onSearch = {}, onFilter = {
                 showBottomSheet = true
@@ -119,6 +119,7 @@ private fun HomeBody(
             HomeListProduct(
                 modifier = Modifier
                     .weight(1f)
+                    .fillMaxSize()
                     .padding(16.dp),
                 listProduct = listProduct,
                 emptyItem = { HomeProductListEmptyItem() },
@@ -155,6 +156,7 @@ private fun HomeBody(
 @Composable
 fun HomeProductListEmptyItem() {
     ListEmptyItem(
+        modifier = Modifier.fillMaxSize(),
         icon = Icons.Outlined.List,
         title = "No Product Items!",
         content = "Some thing went wrong.\nTry again later.",
@@ -176,11 +178,25 @@ private fun HomeScreenPrev() {
                 description = "No",
                 imageUrl = "https://static.pullandbear.net/2/photos//2024/V/0/2/p/3241/570/711/3241570711_2_1_8.jpg?t=1713773719598&imwidth=1125",
                 category = "TShirt",
-                sizeList = listOf("S","M","L")
+                sizeList = listOf("S", "M", "L")
             )
         },
         onSelectedFilterCategoryChange = {},
-        onNavigateProductDetails = {}
+        onNavigateProductDetails = {},
+        onNavigateNotifications = {},
 
-    )
+        )
+}
+
+@Preview
+@Composable
+private fun HomeScreenEmptyPrev() {
+    HomeBody(
+        listFilter = listOf("All", "Tshirt"),
+        listProduct = listOf(),
+        onSelectedFilterCategoryChange = {},
+        onNavigateProductDetails = {},
+        onNavigateNotifications = {},
+
+        )
 }
