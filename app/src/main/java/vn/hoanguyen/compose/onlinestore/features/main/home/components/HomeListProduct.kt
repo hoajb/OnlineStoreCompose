@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import vn.hoanguyen.compose.onlinestore.data_providers.Product
+import vn.hoanguyen.compose.onlinestore.features.main.home.HomeProductListEmptyItem
 import vn.hoanguyen.compose.onlinestore.features.main.saved.SavedProductListEmptyItem
 import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 import vn.hoanguyen.compose.onlinestore.ui.theme.ColorRed
@@ -54,7 +55,7 @@ fun HomeListProduct(
 ) {
     if (listProduct.isEmpty()) {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(color = Color.White),
             contentAlignment = Alignment.Center
@@ -174,7 +175,7 @@ private fun HomeListProductPrev() {
 private fun HomeListProductEmptyPrev() {
     OnlineStoreComposeTheme {
         HomeListProduct(listProduct = emptyList(),
-            emptyItem = { SavedProductListEmptyItem() },
+            emptyItem = { HomeProductListEmptyItem() },
             onItemPressed = {},
             onFavoritePressed = {})
     }

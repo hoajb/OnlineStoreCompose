@@ -76,7 +76,10 @@ fun ProductDetailsScreen(
     }
     val product = viewModel.productState.collectAsState()
     Scaffold(topBar = { AppTopAppBar(title = "Details", onBack = onBack) }) { padding ->
-        Box(Modifier.padding(padding)) {
+        Box(
+            Modifier
+                .padding(padding)
+                .background(color = Color.White)) {
             when (product.value) {
                 is ProductState.Loading -> Box(
                     Modifier.fillMaxSize(),

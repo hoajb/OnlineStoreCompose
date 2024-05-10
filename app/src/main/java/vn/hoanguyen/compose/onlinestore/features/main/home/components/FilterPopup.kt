@@ -66,7 +66,7 @@ fun FilterPopupContent(
         Spacer(modifier = Modifier.height(10.dp))
         Text("Sort by", style = AppTypography.titleMedium)
         Spacer(modifier = Modifier.height(10.dp))
-        FilterSelectionBar(viewmodel = viewModel(),
+        FilterSelectionBar(
             listItem = listFilter.mapIndexed { index, item ->
                 FilterItem(id = index, text = item)
             },

@@ -55,7 +55,7 @@ fun ForgotPasswordScreen(
                     .padding(all = 20.dp)
             ) {
                 val focusRequester = FocusRequester()
-                val (emailText, setEmailText) = remember { mutableStateOf("hhh@gmall.com") }
+                val (emailText, setEmailText) = remember { mutableStateOf("example@gmail.com") }
                 val focusManager = LocalFocusManager.current
                 val onSendCode: () -> Unit = {
                     focusManager.clearFocus()

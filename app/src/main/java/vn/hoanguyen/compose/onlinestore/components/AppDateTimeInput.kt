@@ -100,7 +100,7 @@ fun AppDateTimeInput(
     // date picker component
     if (showDatePicker) {
         DatePickerDialog(
-            onDismissRequest = { /*TODO*/ },
+            onDismissRequest = {  },
             confirmButton = {
                 TextButton(
                     onClick = {

@@ -1,5 +1,6 @@
 package vn.hoanguyen.compose.onlinestore.features.main.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -23,11 +24,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import vn.hoanguyen.compose.onlinestore.components.ListEmptyItem
 import vn.hoanguyen.compose.onlinestore.data_providers.Product
@@ -35,7 +34,6 @@ import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterChoi
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterItem
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterPopupContent
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterSelectionBar
-import vn.hoanguyen.compose.onlinestore.features.main.home.components.FilterSelectionBarViewModel
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeAppBar
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeListProduct
 import vn.hoanguyen.compose.onlinestore.features.main.home.components.HomeSearchBar
@@ -48,7 +46,8 @@ fun HomeScreen(
 ) {
     val listFilter = viewmodel.listOfFilter.collectAsState()
     val listProduct = viewmodel.listProduct.collectAsState()
-    val context = LocalContext.current
+    var searchQueryText by remember { mutableStateOf("") }
+    val filterCategoryList = remember { mutableStateOf<List<String>>(emptyList()) }
 
     LaunchedEffect(Unit) {
         viewmodel.loadProductFilter()
@@ -58,11 +57,19 @@ fun HomeScreen(
     HomeBody(
         listFilter = listFilter.value,
         listProduct = listProduct.value,
-        onSelectedFilterCategoryChange = { listCategory ->
-            viewmodel.loadProductList(listCategory)
+        onSelectedFilterCategoryChange = { filter ->
+            filterCategoryList.value = filter
+            viewmodel.loadProductList(listCategory = filter, query = searchQueryText)
         },
         onNavigateProductDetails = onNavigateProductDetails,
-        onNavigateNotifications = onNavigateNotifications
+        onNavigateNotifications = onNavigateNotifications,
+        onSearchProduct = { query ->
+            searchQueryText = query
+            viewmodel.loadProductList(
+                listCategory = filterCategoryList.value,
+                query = searchQueryText
+            )
+        }
     )
 }
 
@@ -74,13 +81,13 @@ private fun HomeBody(
     onSelectedFilterCategoryChange: (List<String>) -> Unit,
     onNavigateProductDetails: (String) -> Unit,
     onNavigateNotifications: () -> Unit,
+    onSearchProduct: (String) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
 
-    val viewModelFilterSelectionBar: FilterSelectionBarViewModel = viewModel()
 
     Surface(
         color = Color.White
@@ -95,17 +102,20 @@ private fun HomeBody(
                 onNavigateNotification = onNavigateNotifications
             )
 
-            HomeSearchBar(onSearch = {}, onFilter = {
-                showBottomSheet = true
-            })
+            HomeSearchBar(
+                onValueChange = onSearchProduct,
+                onSearch = onSearchProduct,
+                onFilter = {
+                    showBottomSheet = true
+                })
 
 
             FilterSelectionBar(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                viewmodel = viewModelFilterSelectionBar,
                 listItem = listFilter.mapIndexed { index, item ->
                     FilterItem(id = index, text = item)
                 },
+                defaultSelectedIndex = 0,
                 filterChoice = FilterChoice.Multi,
                 onSelectedChange = { indexList ->
                     if (indexList.contains(0)) { // All
@@ -156,10 +166,9 @@ private fun HomeBody(
 @Composable
 fun HomeProductListEmptyItem() {
     ListEmptyItem(
-        modifier = Modifier.fillMaxSize(),
-        icon = Icons.Outlined.List,
+        icon = Icons.AutoMirrored.Filled.List,
         title = "No Product Items!",
-        content = "Some thing went wrong.\nTry again later.",
+        content = "Update your searching and filtering.\nPlease try again.",
     )
 }
 
@@ -184,6 +193,7 @@ private fun HomeScreenPrev() {
         onSelectedFilterCategoryChange = {},
         onNavigateProductDetails = {},
         onNavigateNotifications = {},
+        onSearchProduct = {},
 
         )
 }
@@ -197,6 +207,7 @@ private fun HomeScreenEmptyPrev() {
         onSelectedFilterCategoryChange = {},
         onNavigateProductDetails = {},
         onNavigateNotifications = {},
+        onSearchProduct = {},
 
         )
 }

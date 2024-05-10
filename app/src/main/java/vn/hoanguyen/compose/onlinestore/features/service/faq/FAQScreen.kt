@@ -96,14 +96,11 @@ fun FAQBody(
                 .padding(16.dp)
 
         ) {
-            val filterSelectionBarViewModel: FilterSelectionBarViewModel = viewModel()
-            LaunchedEffect(key1 = Unit) {
-                filterSelectionBarViewModel.select(0)
-            }
-            FilterSelectionBar(viewmodel = filterSelectionBarViewModel,
+            FilterSelectionBar(
                 listItem = listFilter.mapIndexed { index, item ->
                     FilterItem(id = index, text = item)
                 },
+                defaultSelectedIndex = 0,
                 filterChoice = FilterChoice.Single,
                 onSelectedChange = { indexList ->
                     onFilterChange.invoke(indexList[0])//Single choice

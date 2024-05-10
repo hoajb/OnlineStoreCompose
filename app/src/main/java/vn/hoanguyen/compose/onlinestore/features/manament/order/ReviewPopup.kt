@@ -1,6 +1,6 @@
 package vn.hoanguyen.compose.onlinestore.features.manament.order
 
-import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import vn.hoanguyen.compose.onlinestore.components.AppDivider
@@ -46,13 +45,13 @@ import vn.hoanguyen.compose.onlinestore.ui.theme.ColorYellow
 fun ReviewPopupContent(
     onHidePopup: () -> Unit,
 ) {
-    val focusManager = LocalFocusManager.current
     val focusRequester = FocusRequester()
-
     val (reviewText, updateReviewText) = remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+        modifier = Modifier
+            .background(color = Color.White)
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

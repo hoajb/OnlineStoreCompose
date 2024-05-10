@@ -26,9 +26,15 @@ class HomeViewmodel @Inject constructor(
         }
     }
 
-    fun loadProductList(listCategory: List<String> = emptyList()) {
+    fun loadProductList(
+        listCategory: List<String> = emptyList(),
+        query: String = ""
+    ) {
         viewModelScope.launch {
-            _listProduct.emit(productService.getProductList(listCategory = listCategory))
+            _listProduct.emit(
+                productService.getProductList(listCategory = listCategory).filter { product ->
+                    product.name.contains(query) || product.description.contains(query)
+                })
         }
     }
 

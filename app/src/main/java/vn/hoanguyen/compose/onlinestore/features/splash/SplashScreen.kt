@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.delay
 import vn.hoanguyen.compose.onlinestore.R
 import vn.hoanguyen.compose.onlinestore.components.Loading
 import vn.hoanguyen.compose.onlinestore.features.auth.AuthViewmodel
@@ -27,6 +28,7 @@ fun SplashScreen(
     onNavigateMain: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
+        delay(1000)
         authViewmodel.onNavigateHandle(
             onNavigateWelcome,
             onNavigateMain
@@ -55,7 +57,8 @@ fun SplashBody() {
             Loading(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 30.dp)
+                    .padding(bottom = 30.dp),
+                color = Color.Black
             )
         }
     }

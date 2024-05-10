@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MainPage() {
-    OnlineStoreComposeTheme {
+    OnlineStoreComposeTheme(dynamicColor = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color.White

@@ -19,13 +19,11 @@ import vn.hoanguyen.compose.onlinestore.ui.theme.AppTypography
 
 @Composable
 fun ListEmptyItem(
-    modifier: Modifier = Modifier,
     icon: ImageVector,
     title: String,
     content: String,
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

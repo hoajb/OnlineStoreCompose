@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,6 +28,9 @@ import kotlinx.coroutines.launch
 import vn.hoanguyen.compose.onlinestore.components.AppTopAppBar
 import vn.hoanguyen.compose.onlinestore.components.tabs.AppCustomTab
 import vn.hoanguyen.compose.onlinestore.ui.theme.OnlineStoreComposeTheme
+
+private const val OrderOngoing = 0
+private const val OrderCompleted = 1
 
 @Composable
 fun MyOrdersScreen(
@@ -63,12 +65,12 @@ fun MyOrdersScreen(
             HorizontalPager(state = pagerState) { page ->
                 // Our page content
                 when (page) {
-                    0 -> OrderOngoing(listOrders = listOngoingOrders,
+                    OrderOngoing -> OrderOngoing(listOrders = listOngoingOrders,
                         onNavigateToTrackOrder = {
                             //TODO
                         })
 
-                    1 -> OrderCompleted(
+                    OrderCompleted -> OrderCompleted(
                         listOrders = listCompletedOrders,
                     )
                 }

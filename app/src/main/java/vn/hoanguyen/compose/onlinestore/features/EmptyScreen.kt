@@ -25,7 +25,7 @@ fun EmptyScreen(title: String = "", onBack: () -> Unit = {}) {
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text(title.ifEmpty { "EmptyScreen" })
+            Text(title.ifEmpty { "EmptyScreen" }.plus("Under development!"))
         }
     }
 }

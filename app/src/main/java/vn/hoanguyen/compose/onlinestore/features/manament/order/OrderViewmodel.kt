@@ -35,7 +35,7 @@ class OrderViewmodel @Inject constructor(
                     OrderProduct(
                         cartProduct = CartProduct(
                             product = it,
-                            size = if (it.name.length % 2 == 0) "L" else "M",
+                            size = if (it.name.length % 2 == 0) "L" else "M", //fake selected size
                             quantity = 1
                         ),
                         status = getRandomOrderStatus().text
@@ -52,10 +52,10 @@ class OrderViewmodel @Inject constructor(
                     OrderProduct(
                         cartProduct = CartProduct(
                             product = it,
-                            size = if (it.name.length % 2 == 0) "L" else "M",
+                            size = if (it.name.length % 2 == 0) "L" else "M", //fake selected size
                             quantity = 1
                         ),
-                        status = if (it.name.length % 3 == 0) "4.5" else ""
+                        status = if (it.name.length % 3 != 0) "4.5" else "" //fake review status
                     )
 
                 })

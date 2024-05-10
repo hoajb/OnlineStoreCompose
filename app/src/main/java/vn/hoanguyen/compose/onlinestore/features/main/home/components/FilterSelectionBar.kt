@@ -13,7 +13,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -65,13 +67,20 @@ enum class FilterChoice {
 
 @Composable
 fun FilterSelectionBar(
-    viewmodel: FilterSelectionBarViewModel,
     modifier: Modifier = Modifier,
     filterChoice: FilterChoice = FilterChoice.Multi,
     listItem: List<FilterItem> = emptyList(),
+    defaultSelectedIndex: Int = -1,
     onSelectedChange: (List<Int>) -> Unit
 ) {
+    val viewmodel: FilterSelectionBarViewModel = remember { FilterSelectionBarViewModel() }
     val selectedIndexList = viewmodel.selectedIndexList
+
+    LaunchedEffect(key1 = Unit) {
+        if (defaultSelectedIndex >= 0 && defaultSelectedIndex < listItem.size) {
+            viewmodel.select(defaultSelectedIndex, filterChoice)
+        }
+    }
 
     Box(
         modifier
@@ -120,7 +129,6 @@ fun FilterSelectionBar(
 private fun FilterSelectionBarPrev() {
     Surface {
         FilterSelectionBar(
-            viewmodel = viewModel(),
             listItem = listOf(
                 FilterItem(id = 1, "All"),
                 FilterItem(id = 1, "T-Shirts T-Shirts"),

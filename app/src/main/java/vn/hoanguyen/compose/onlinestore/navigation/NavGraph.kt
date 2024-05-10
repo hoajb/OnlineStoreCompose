@@ -37,7 +37,7 @@ import vn.hoanguyen.compose.onlinestore.features.splash.SplashScreen
 @Composable
 fun NavGraph(navController: NavHostController, navBottomBarController: NavHostController) {
     NavHost(
-        navController = navController, startDestination = NavRoute.Main.path
+        navController = navController, startDestination = NavRoute.Splash.path
     ) {
         addSplashScreen(navController)
         addWelcomeScreen(navController)
@@ -214,7 +214,7 @@ private fun NavGraphBuilder.addOTPScreen(
     navController: NavHostController,
 ) {
     composable(route = NavRoute.OTP.path) {
-        OTPScreen(email = "example@emial.com", //TODO
+        OTPScreen(email = "example@email.com",
             onNavigationBack = {
                 navController.popBackStack()
             }, onOTPEntered = { otp ->
