@@ -44,8 +44,8 @@ fun MyDetailsScreen(
 ) {
     val focusRequester = FocusRequester()
 
-    val (fullName, updateFullName) = remember { mutableStateOf("Bill Gate") }
-    val (email, updateEmail) = remember { mutableStateOf("bill@email.com") }
+    val (fullName, updateFullName) = remember { mutableStateOf("Billy Nguyen") }
+    val (email, updateEmail) = remember { mutableStateOf("billy@email.com") }
 
 
     Scaffold(Modifier.background(Color.White), topBar = {

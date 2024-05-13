@@ -113,7 +113,10 @@ fun FAQBody(
             )
 
             if (faqList.isEmpty()) {
-                Box(modifier = Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
                     FAQListEmptyItem()
                 }
             } else

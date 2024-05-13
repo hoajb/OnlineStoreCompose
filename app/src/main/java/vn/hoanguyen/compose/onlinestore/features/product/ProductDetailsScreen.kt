@@ -79,7 +79,8 @@ fun ProductDetailsScreen(
         Box(
             Modifier
                 .padding(padding)
-                .background(color = Color.White)) {
+                .background(color = Color.White)
+        ) {
             when (product.value) {
                 is ProductState.Loading -> Box(
                     Modifier.fillMaxSize(),
@@ -144,6 +145,7 @@ fun ProductDetailBody(
                         .fillMaxWidth()
                         .aspectRatio(1f)
                         .wrapContentHeight()
+                        .background(color = Color.LightGray.copy(alpha = 0.3f))
                 )
 
                 Box(

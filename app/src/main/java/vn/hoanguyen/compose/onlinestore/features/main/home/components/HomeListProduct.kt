@@ -101,7 +101,7 @@ fun ProductItem(
                 .aspectRatio(1f)
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(12.dp))
-                .background(color = Color.LightGray)
+                .background(color = Color.LightGray.copy(alpha = 0.3f))
         ) {
             AsyncImage(
                 model = product.imageUrl,
@@ -162,7 +162,7 @@ private fun HomeListProductPrev() {
                 description = "No",
                 imageUrl = "https://static.pullandbear.net/2/photos//2024/V/0/2/p/3241/570/711/3241570711_2_1_8.jpg?t=1713773719598&imwidth=1125",
                 category = "TShirt",
-                sizeList = listOf("S","M","L")
+                sizeList = listOf("S", "M", "L")
             )
         },
             onItemPressed = {},

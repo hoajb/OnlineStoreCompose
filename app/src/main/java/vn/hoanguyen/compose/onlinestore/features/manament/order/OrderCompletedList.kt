@@ -130,7 +130,7 @@ fun OrderCompleted(
                 .height(100.dp)
                 .aspectRatio(1f)
                 .clip(shape = RoundedCornerShape(6.dp))
-                .background(color = Color.Gray)
+                .background(color = Color.LightGray.copy(alpha = 0.3f))
         )
         Spacer(modifier = Modifier.width(10.dp))
         Column {
