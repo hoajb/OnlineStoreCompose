@@ -31,6 +31,15 @@ the [Figma Mockup](https://www.figma.com/file/1AlIWGpEbtPmpOdApSDTZT/Spotify-Eco
 - Phone number input with flag
 - Google Maps, Location and Permissions, secrets Maps API key
 
+## How to run
+Just Run app on Android Studio. No authenticate requires.
+
+- Add MAPS_API_KEY (Not require) to secrets.properties to see Maps in Address Add New page feature. Then keep secrets.properties file it in gitignore.
+
+#https://developers.google.com/maps/documentation/embed/get-api-key
+#MAPS_API_KEY=AIza-xxxxxxxxxxxxxxxxxxxxxx
+MAPS_API_KEY=
+
 ## Screenshots
 
 <table>

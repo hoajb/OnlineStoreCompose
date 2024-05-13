@@ -94,7 +94,7 @@ dependencies {
 
 secrets {
     // To add your Maps API key to this project:
-    // 1. Add this line to your local.properties file, where YOUR_API_KEY is your API key:
+    // 1. Add this line to your secrets.properties file, where YOUR_API_KEY is your API key:
     //        MAPS_API_KEY=YOUR_API_KEY
     propertiesFileName = "secrets.properties"
     defaultPropertiesFileName = "local.properties"
